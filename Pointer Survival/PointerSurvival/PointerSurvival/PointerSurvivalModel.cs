@@ -10,7 +10,19 @@ namespace PointerSurvival
 {
     class PointerSurvivalModel : Model
     {
+
         Player player;
+        public static int DirectionUp = 1;
+        public static int DirectionDown = 2;
+        public static int DirectionLeft = 3;
+        public static int DirectionRight = 4;
+        public static int DirectionUpLeft = 5;
+        public static int DirectionUpRight = 6;
+        public static int DirectionDownLeft = 7;
+        public static int DirectionDownRight = 8;
+
+        private int playerDirection;
+
         List<Obstacle> obstacles = new List<Obstacle>();
         List<Weapon> bullets = new List<Weapon>();
         public Calculation cal = new Calculation();
@@ -18,30 +30,87 @@ namespace PointerSurvival
         public PointerSurvivalModel()
         {
             player = new Player();
+            playerDirection = DirectionUp;
         }
 
-        public void MoveUp()//if (y > player.Position.Y)
+        public void MoveUp()
         {
-            player.Position = new Point(player.Position.X, player.Position.Y - PointerSurvivalController.Speed);
+            playerDirection = DirectionUp;
         }
 
-        public void MoveDown()//else if (y < player.Position.Y)
+        public void MoveDown()
         {
-            player.Position = new Point(player.Position.X, player.Position.Y + PointerSurvivalController.Speed);
+            playerDirection = DirectionDown;
         }
 
-        public void MoveRight()//if (x > player.Position.X)
+        public void MoveRight()
         {
-            player.Position = new Point(player.Position.X + PointerSurvivalController.Speed, player.Position.Y);
+            playerDirection = DirectionRight;
         }
 
-        public void MoveLeft()//else if (x < player.Position.X)
+        public void MoveLeft()
         {
-            player.Position = new Point(player.Position.X - PointerSurvivalController.Speed, player.Position.Y);
+            playerDirection = DirectionLeft;
         }
 
+        public void MoveUpRight()
+        {
+            playerDirection = DirectionUpRight;
+        }
+
+        public void MoveUpLeft()
+        {
+            playerDirection = DirectionUpLeft;
+        }
+
+        public void MoveDownRight()
+        {
+            playerDirection = DirectionDownRight;
+        }
+
+        public void MoveDownLeft()
+        {
+            playerDirection = DirectionDownLeft;
+        }
         public void MoveToMouse(int x, int y)
         {
+            
+            if (playerDirection == DirectionUpRight)
+            {
+                player.Position = new Point(player.Position.X, player.Position.Y - PointerSurvivalController.Speed);
+                player.Position = new Point(player.Position.X + PointerSurvivalController.Speed, player.Position.Y);
+            }
+            else if (playerDirection == DirectionUpLeft)
+            {
+                player.Position = new Point(player.Position.X, player.Position.Y - PointerSurvivalController.Speed);
+                player.Position = new Point(player.Position.X - PointerSurvivalController.Speed, player.Position.Y);
+            }
+            else if (playerDirection == DirectionDownRight)
+            {
+                player.Position = new Point(player.Position.X, player.Position.Y + PointerSurvivalController.Speed);
+                player.Position = new Point(player.Position.X + PointerSurvivalController.Speed, player.Position.Y);
+            }
+            else if (playerDirection == DirectionDownLeft)
+            {
+                player.Position = new Point(player.Position.X, player.Position.Y + PointerSurvivalController.Speed);
+                player.Position = new Point(player.Position.X - PointerSurvivalController.Speed, player.Position.Y);
+            }
+            else if (playerDirection == DirectionRight)
+            {
+                player.Position = new Point(player.Position.X + PointerSurvivalController.Speed, player.Position.Y);
+            }
+            else if (playerDirection == DirectionLeft)
+            {
+                player.Position = new Point(player.Position.X - PointerSurvivalController.Speed, player.Position.Y);
+            }
+            else if (playerDirection == DirectionUp)
+            {
+                player.Position = new Point(player.Position.X, player.Position.Y - PointerSurvivalController.Speed);
+            }
+            else if (playerDirection == DirectionDown)
+            {
+                player.Position = new Point(player.Position.X, player.Position.Y + PointerSurvivalController.Speed);
+            }
             ////Check X coord
             //if (goRight)
             //{
@@ -67,7 +136,7 @@ namespace PointerSurvival
 
         public void Fire()
         {
-            player.Fire();
+            player.Fire(playerDirection);
             bullets.Add(player.weapon);
             NotifyBullet();
         }

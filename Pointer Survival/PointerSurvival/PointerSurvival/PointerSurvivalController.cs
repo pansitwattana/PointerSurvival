@@ -9,9 +9,9 @@ namespace PointerSurvival
 {
     class PointerSurvivalController : Controller
     {
-        public static int Speed = 10;
+        public static int Speed = 3;
         public static int TimeToCreateAsteroid = 1;
-        public static int BulletSpeed = 1;
+        public static int BulletSpeed = 10;
         public const int MoveToMouse = 0;
         public const int Fire = 1;
         public const int CreateAsteroid = 2;
@@ -19,6 +19,10 @@ namespace PointerSurvival
         public const int Down = 4;
         public const int Left = 5;
         public const int Right = 6;
+        public const int UpRight = 7;
+        public const int UpLeft = 8;
+        public const int DownLeft = 9;
+        public const int DownRight = 10;
         
 
         public override void ActionPerformed(int action)
@@ -47,6 +51,18 @@ namespace PointerSurvival
                         break;
                     case Right:
                         m.MoveRight();
+                        break;
+                    case UpLeft:
+                        m.MoveUpLeft();
+                        break;
+                    case UpRight:
+                        m.MoveUpRight();
+                        break;
+                    case DownLeft:
+                        m.MoveDownLeft();
+                        break;
+                    case DownRight:
+                        m.MoveDownRight();
                         break;
                 }
             }

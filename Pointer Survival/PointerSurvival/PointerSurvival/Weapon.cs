@@ -39,8 +39,8 @@ namespace PointerSurvival
 
         private bool goX;
         private bool goY;
-
-        public void Shoot(int x, int y)
+        private int playerDirection;
+        public void Shoot(int x, int y, int Direction)
         {
             PictureBox mainSprite = new PictureBox();
             mainSprite.Size = new Size(10, 10);
@@ -50,6 +50,9 @@ namespace PointerSurvival
             obj = mainSprite;
             goX = Form.MousePosition.X > x;
             goY = Form.MousePosition.Y > y;
+
+            playerDirection = Direction;
+
             BulletMove();
         }
 
@@ -57,24 +60,40 @@ namespace PointerSurvival
         {
             if (isActive)
             {
-                if (goX)
-                {
-                    obj.Left += PointerSurvivalController.BulletSpeed;
-                }
-                else
-                {
-                    obj.Left -= PointerSurvivalController.BulletSpeed;
-                }
-
-                //Check Y coord
-                if (goY)
-                {
-                    obj.Top += PointerSurvivalController.BulletSpeed;
-                }
-                else
+                if (playerDirection == PointerSurvivalModel.DirectionUp)
                 {
                     obj.Top -= PointerSurvivalController.BulletSpeed;
                 }
+                else if (playerDirection == PointerSurvivalModel.DirectionDown)
+                {
+                    obj.Top += PointerSurvivalController.BulletSpeed;
+                }
+                else if (playerDirection == PointerSurvivalModel.DirectionRight)
+                {
+                    obj.Left += PointerSurvivalController.BulletSpeed;
+                }
+                else if (playerDirection == PointerSurvivalModel.DirectionLeft)
+                {
+                    obj.Left -= PointerSurvivalController.BulletSpeed;
+                }
+                //if (goX)
+                //{
+                //    obj.Left += PointerSurvivalController.BulletSpeed;
+                //}
+                //else
+                //{
+                //    obj.Left -= PointerSurvivalController.BulletSpeed;
+                //}
+
+                ////Check Y coord
+                //if (goY)
+                //{
+                //    obj.Top += PointerSurvivalController.BulletSpeed;
+                //}
+                //else
+                //{
+                //    obj.Top -= PointerSurvivalController.BulletSpeed;
+                //}
             }
             
         }

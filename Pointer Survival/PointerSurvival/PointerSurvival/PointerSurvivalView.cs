@@ -7,6 +7,7 @@ using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using System.Windows.Forms;
 
 
@@ -172,19 +173,36 @@ namespace PointerSurvival
             {
                 controller.ActionPerformed(PointerSurvivalController.Fire);
             }
-            if (e.KeyCode == Keys.W)
+
+            if (e.KeyCode == Keys.W && e.Modifiers == Keys.D)
+            {
+                controller.ActionPerformed(PointerSurvivalController.UpRight);
+            }
+            else if (e.KeyCode == Keys.W && e.Modifiers == Keys.A)
+            {
+                controller.ActionPerformed(PointerSurvivalController.UpLeft);
+            }
+            else if (e.KeyCode == Keys.S && e.Modifiers == Keys.D)
+            {
+                controller.ActionPerformed(PointerSurvivalController.DownRight);
+            }
+            else if (e.KeyCode == Keys.S && e.Modifiers == Keys.A)
+            {
+                controller.ActionPerformed(PointerSurvivalController.DownLeft);
+            }
+            else if (e.KeyCode == Keys.W)
             {
                 controller.ActionPerformed(PointerSurvivalController.Up);
             }
-            if (e.KeyCode == Keys.S)
+            else if (e.KeyCode == Keys.S)
             {
                 controller.ActionPerformed(PointerSurvivalController.Down);
             }
-            if (e.KeyCode == Keys.A)
+            else if (e.KeyCode == Keys.A)
             {
                 controller.ActionPerformed(PointerSurvivalController.Left);
             }
-            if (e.KeyCode == Keys.D)
+            else if (e.KeyCode == Keys.D)
             {
                 controller.ActionPerformed(PointerSurvivalController.Right);
             }
@@ -237,6 +255,11 @@ namespace PointerSurvival
         }
 
         private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void PointerSurvivalView_Paint(object sender, PaintEventArgs e)
         {
 
         }

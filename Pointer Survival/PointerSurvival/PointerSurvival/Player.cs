@@ -35,9 +35,9 @@ namespace PointerSurvival
 
         }
 
-        public void Fire()
+        public void Fire(int playerDirection)
         {
-            weapon.Shoot(position.X, position.Y);
+            weapon.Shoot(position.X, position.Y,playerDirection);
         }
     }
 }
