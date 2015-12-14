@@ -138,7 +138,9 @@
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.PointerSurvivalView_Paint);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseClick);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PointerSurvivalView_MouseDown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseMove);
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PointerSurvivalView_MouseUp);
             ((System.ComponentModel.ISupportInitialize)(this.PointerBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

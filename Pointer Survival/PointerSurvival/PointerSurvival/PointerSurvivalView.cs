@@ -18,7 +18,10 @@ namespace PointerSurvival
         Model model;
         Controller controller;
         public static PictureBox pointerBox;
-        private bool isGameOver = false;
+
+        private bool m_right = false;
+        private bool m_left = false;
+
 
         public PointerSurvivalView()
         {
@@ -90,12 +93,12 @@ namespace PointerSurvival
             if (obstacles.Count > 0)
                 foreach (Obstacle o in obstacles)
                 {
-                    if (o.Move())
+                    if (o.Update())
                     {
                         o.Destroy();
                         this.Controls.Remove(o.obj);
                         PointerBox.Hide();
-                        this.Close();
+                        Close();
                     }
                     //if (!this.ClientRectangle.IntersectsWith(o.obj.Bounds))
                     //{
@@ -176,10 +179,12 @@ namespace PointerSurvival
 
             if (e.KeyCode == Keys.W && e.Modifiers == Keys.D)
             {
+                Console.WriteLine("W D pressed");
                 controller.ActionPerformed(PointerSurvivalController.UpRight);
             }
             else if (e.KeyCode == Keys.W && e.Modifiers == Keys.A)
             {
+                Console.WriteLine("W A pressed");
                 controller.ActionPerformed(PointerSurvivalController.UpLeft);
             }
             else if (e.KeyCode == Keys.S && e.Modifiers == Keys.D)
@@ -216,7 +221,7 @@ namespace PointerSurvival
         private void timer1_Tick(object sender, EventArgs e)
         {
             this.Refresh();
-            controller.ActionPerformed(PointerSurvivalController.MoveToMouse);
+            controller.ActionPerformed(PointerSurvivalController.TimeTick);
 
 
             //player.Accelerate(MousePosition.X, MousePosition.Y);
@@ -262,6 +267,33 @@ namespace PointerSurvival
         private void PointerSurvivalView_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void PointerSurvivalView_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                m_left = true;
+                Console.WriteLine("Test Mouse Left Clicked");
+            }
+            if (e.Button == MouseButtons.Right)
+            {
+                m_right = true;
+                Console.WriteLine("Mouse Right Clicked");
+            }
+
+            if (m_left == false || m_right == false) return;
+
+           
+
+        }
+
+        private void PointerSurvivalView_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+                m_left = false;
+            if (e.Button == MouseButtons.Right)
+                m_right = false;
         }
     }
 }

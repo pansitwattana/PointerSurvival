@@ -11,9 +11,15 @@ namespace PointerSurvival
 {
     class Obstacle
     {
+        public static int PercentBornHidable = 100;
+        public static int TimeForHide = 150;
+
         public static Random random = new Random();
         public static int SafeDistance = 250;
         public PictureBox obj { get; set; }
+        public Point Position { get; set; }
+        public bool isHidable { get; set; }
+        private bool isHide = true;
 
         public int Number { get; set; } = 0;
 
@@ -32,75 +38,52 @@ namespace PointerSurvival
             get { return direction; }
             set { direction = value; }
         }
-        private int targetX, targetY;
         public int Size { get; set; }
 
-        public Obstacle()
+        private int counter = 0;
+
+        public Obstacle(int playerX, int playerY)
         {
-            while (Number == 0)
-            {
-                Number = random.Next(15) - 4;
-            }
+            CreateObstacle(playerX, playerY);
+        }
 
-            int x = random.Next(1000);
-            int y = random.Next(500);
+        private void CreateObstacle(int playerX, int playerY)
+        {
+            CreateImageWith(GenerateNumberOrOperator(), RandomLocationWithSafeDistanceFrom(playerX, playerY), random.Next(50, 200), random.Next(1, 4));
+            RandomType();
+            goX = playerX > obj.Left;
+            goY = playerY > obj.Top;
+            Update();
+        }
 
-            while (Math.Abs(x - Form.MousePosition.X) < SafeDistance)
+        private void CreateImageWith(string symbol, Point point, int size, int speed)
+        {
+            if(obj == null)
             {
-                x = random.Next(1000);
+                obj = new PictureBox();
             }
-            while (Math.Abs(y - Form.MousePosition.Y) < SafeDistance)
-            {
-                y = random.Next(500);
-            }
-            obj = new PictureBox();
             Bitmap bmp = new Bitmap(PointerSurvival.Properties.Resources.obstacle);
-            Point location = new Point(x, y);
+            Point location = point;
             Graphics g = Graphics.FromImage(bmp);
-            Size = random.Next(50, 200);
+            Size = size;
 
             g.SmoothingMode = SmoothingMode.AntiAlias;
             g.InterpolationMode = InterpolationMode.HighQualityBicubic;
             g.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
-            string symbol;
-            if (Number > 0)
-            {
-                symbol = Number.ToString();
-            }
-            else
-            {
-                if (Number == Calculation.Plus)
-                {
-                    symbol = "+";
-                }
-                else if(Number == Calculation.Minus)
-                {
-                    symbol = "-";
-                }
-                else if(Number == Calculation.Multiply)
-                {
-                    symbol = "*";
-                }
-                else
-                {
-                    symbol = "/";
-                }
-            }
-
-            g.DrawString(symbol, new Font("Tahoma", 20), Brushes.Black, new Point(20,20));
+            g.DrawString(symbol, new Font("Tahoma", 20), Brushes.Black, new Point(20, 20));
 
             g.Flush();
 
-            obj.Image = bmp; 
+            obj.Image = bmp;
             obj.Location = location;
             obj.Size = new Size(Size, Size);
             obj.SizeMode = PictureBoxSizeMode.StretchImage;
             isActice = true;
-            speed = random.Next(1,4);
+            this.speed = speed;
             //PictureBox mainSprite = new PictureBox();
             //mainSprite.Size = new Size(Size,Size);
-            
+
             //while(Math.Abs(x - Form.MousePosition.X) < SafeDistance)
             //{
             //    x = random.Next(1000);
@@ -114,14 +97,104 @@ namespace PointerSurvival
             //mainSprite.SizeMode = PictureBoxSizeMode.StretchImage;
             //mainSprite.BackColor = Color.Transparent;
             //obj = mainSprite;
-            goX = Form.MousePosition.X > obj.Left;
-            goY = Form.MousePosition.Y > obj.Top;
-            Move();
+
+        }
+
+        private void RandomType()
+        {
+            if(random.Next(100) < PercentBornHidable)
+            {
+                isHidable = true;
+            }
+            else
+            {
+                isHidable = false;
+            }
+        }
+
+        private Point RandomLocationWithSafeDistanceFrom(int playerX, int playerY)
+        {
+            int x = random.Next(1000);
+            int y = random.Next(500);
+            while (Math.Abs(x - playerX) < SafeDistance)
+            {
+                x = random.Next(1000);
+            }
+            while (Math.Abs(y - playerY) < SafeDistance)
+            {
+                y = random.Next(500);
+            }
+
+            return new Point(x, y);
+        }
+
+        private string GenerateNumberOrOperator()
+        {
+
+            while (Number == 0)
+            {
+                Number = random.Next(15) - 4;
+            }
+
+            string symbol;
+            if (Number > 0)
+            {
+                symbol = Number.ToString();
+            }
+            else
+            {
+                if (Number == Calculation.Plus)
+                {
+                    symbol = "+";
+                }
+                else if (Number == Calculation.Minus)
+                {
+                    symbol = "-";
+                }
+                else if (Number == Calculation.Multiply)
+                {
+                    symbol = "*";
+                }
+                else
+                {
+                    symbol = "/";
+                }
+            }
+            return symbol;
         }
 
         private bool goX;
         private bool goY;
-        public bool Move()
+
+        public void RunAbility()
+        { 
+            if (isHidable)
+            {
+                if(counter % (TimeForHide) == 0) 
+                {
+                    isHide = !isHide;
+                    if (isHide)
+                    {
+                        CreateImageWith("?", obj.Location, Size, Speed);
+                    }
+                    else
+                    {
+                        CreateImageWith("" + Number, obj.Location, Size, Speed);
+                    }
+                } 
+            }
+            counter++;
+        }
+
+        public bool Update()
+        {
+            RunAbility();
+            Move();
+
+            return isHit();
+        }
+
+        public void Move()
         {
             if (isActice)
             {
@@ -144,12 +217,8 @@ namespace PointerSurvival
                 {
                     obj.Top -= speed;
                 }
-               
+
             }
-            
-
-
-            return isHit();
         }
 
         public void Bounce(Obstacle o)
@@ -176,9 +245,9 @@ namespace PointerSurvival
             //bomb.Location = obj.Location;
             //bomb.Image = PointerSurvival.Properties.Resources.explosion1;
             //bomb.BackColor = Color.Transparent;
-            
+
             obj.Dispose();
-            
+
 
         }
 
@@ -193,7 +262,7 @@ namespace PointerSurvival
                     return true;
                 }
             }
-            
+
             return false;
         }
 
@@ -208,10 +277,10 @@ namespace PointerSurvival
                     return true;
                 }
             }
-            
+
             return false;
         }
-        public bool isHit(Obstacle w)//hit obstacle
+        public bool isHit(Obstacle w)
         {
             if (isActice)
             {
@@ -222,7 +291,7 @@ namespace PointerSurvival
                     return true;
                 }
             }
-            
+
             return false;
         }
     }

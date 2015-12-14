@@ -24,6 +24,7 @@ namespace PointerSurvival
         private int playerDirection;
 
         List<Obstacle> obstacles = new List<Obstacle>();
+        List<Item> items = new List<Item>();
         List<Weapon> bullets = new List<Weapon>();
         public Calculation cal = new Calculation();
 
@@ -72,7 +73,7 @@ namespace PointerSurvival
         {
             playerDirection = DirectionDownLeft;
         }
-        public void MoveToMouse(int x, int y)
+        public void TimeTick()
         {
             
             if (playerDirection == DirectionUpRight)
@@ -165,7 +166,7 @@ namespace PointerSurvival
 
         public void CreaeAsteroid()
         {
-            obstacles.Add(new Obstacle());
+            obstacles.Add(new Obstacle(player.Position.X,player.Position.Y));
             NotifyAsteroid();
         }
 

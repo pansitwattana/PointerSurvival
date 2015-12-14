@@ -12,7 +12,7 @@ namespace PointerSurvival
         public static int Speed = 3;
         public static int TimeToCreateAsteroid = 1;
         public static int BulletSpeed = 10;
-        public const int MoveToMouse = 0;
+        public const int TimeTick = 0;
         public const int Fire = 1;
         public const int CreateAsteroid = 2;
         public const int Up = 3;
@@ -31,8 +31,8 @@ namespace PointerSurvival
             {
                 switch (action)
                 {
-                    case MoveToMouse:
-                        m.MoveToMouse(Form.MousePosition.X,Form.MousePosition.Y);
+                    case TimeTick:
+                        m.TimeTick();
                         break;
                     case Fire:
                         m.Fire();
