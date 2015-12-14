@@ -30,11 +30,6 @@ namespace PointerSurvival
 
         }
 
-        public void Rotation()
-        {
-
-        }
-
         public void Fire(int playerDirection)
         {
             weapon.Shoot(position.X, position.Y,playerDirection);

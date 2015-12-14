@@ -12,14 +12,17 @@ namespace PointerSurvival
     class Obstacle
     {
         public static int PercentBornHidable = 20;
-        public static int TimeForHide = 150;
+        public static int PercentBornChanable = 10;
+        public static int TimeForExcitation = 50;
+
 
         public static Random random = new Random();
         public static int SafeDistance = 250;
         public PictureBox obj { get; set; }
         public Point Position { get; set; }
+
         public bool isHidable { get; set; }
-        private bool isHide = true;
+        public bool isChangable { get; set; }
 
         public int Number { get; set; } = 0;
 
@@ -104,11 +107,21 @@ namespace PointerSurvival
         {
             if(random.Next(100) < PercentBornHidable)
             {
+                CreateImageWith("?", obj.Location, Size, Speed);
                 isHidable = true;
             }
             else
             {
                 isHidable = false;
+            }
+
+            if(random.Next(100) < PercentBornChanable)
+            {
+                isChangable = true;
+            }
+            else
+            {
+                isChangable = false;
             }
         }
 
@@ -130,6 +143,7 @@ namespace PointerSurvival
 
         private string GenerateNumberOrOperator()
         {
+            Number = random.Next(15) - 4;
 
             while (Number == 0)
             {
@@ -168,19 +182,12 @@ namespace PointerSurvival
 
         public void RunAbility()
         { 
-            if (isHidable)
+            if (isChangable)
             {
-                if(counter % (TimeForHide) == 0) 
+                if(counter % TimeForExcitation == 0) 
                 {
-                    isHide = !isHide;
-                    if (isHide)
-                    {
-                        CreateImageWith("?", obj.Location, Size, Speed);
-                    }
-                    else
-                    {
-                        CreateImageWith("" + Number, obj.Location, Size, Speed);
-                    }
+                    CreateImageWith(GenerateNumberOrOperator(), obj.Location, Size, Speed);
+                    Console.WriteLine("Update new Numebr");
                 } 
             }
             counter++;
