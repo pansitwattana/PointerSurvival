@@ -11,7 +11,7 @@ namespace PointerSurvival
 {
     class Obstacle
     {
-        public static int PercentBornHidable = 100;
+        public static int PercentBornHidable = 20;
         public static int TimeForHide = 150;
 
         public static Random random = new Random();
