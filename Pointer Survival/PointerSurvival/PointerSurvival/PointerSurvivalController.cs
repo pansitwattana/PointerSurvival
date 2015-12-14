@@ -9,7 +9,7 @@ namespace PointerSurvival
 {
     class PointerSurvivalController : Controller
     {
-        public static int Speed = 3;
+        public static int Speed = 2;
         public static int TimeToCreateAsteroid = 1;
         public static int BulletSpeed = 10;
         public const int TimeTick = 0;

@@ -52,14 +52,14 @@ namespace PointerSurvival
 
         private void CreateObstacle(int playerX, int playerY)
         {
-            CreateImageWith(GenerateNumberOrOperator(), RandomLocationWithSafeDistanceFrom(playerX, playerY), random.Next(50, 200), random.Next(1, 4));
+            CreateImageWith(GenerateNumberOrOperator(), RandomLocationWithSafeDistanceFrom(playerX, playerY), random.Next(1, 4));
             RandomType();
             goX = playerX > obj.Left;
             goY = playerY > obj.Top;
             Update();
         }
 
-        private void CreateImageWith(string symbol, Point point, int size, int speed)
+        private void CreateImageWith(string symbol, Point point, int speed)
         {
             if(obj == null)
             {
@@ -68,7 +68,7 @@ namespace PointerSurvival
             Bitmap bmp = new Bitmap(PointerSurvival.Properties.Resources.obstacle);
             Point location = point;
             Graphics g = Graphics.FromImage(bmp);
-            Size = size;
+            Size = 200 - 50 * speed;
 
             g.SmoothingMode = SmoothingMode.AntiAlias;
             g.InterpolationMode = InterpolationMode.HighQualityBicubic;
@@ -107,7 +107,7 @@ namespace PointerSurvival
         {
             if(random.Next(100) < PercentBornHidable)
             {
-                CreateImageWith("?", obj.Location, Size, Speed);
+                CreateImageWith("?", obj.Location, Speed);
                 isHidable = true;
             }
             else
@@ -186,7 +186,7 @@ namespace PointerSurvival
             {
                 if(counter % TimeForExcitation == 0) 
                 {
-                    CreateImageWith(GenerateNumberOrOperator(), obj.Location, Size, Speed);
+                    CreateImageWith(GenerateNumberOrOperator(), obj.Location, Speed);
                     Console.WriteLine("Update new Numebr");
                 } 
             }
