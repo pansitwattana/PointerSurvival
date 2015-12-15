@@ -34,5 +34,11 @@ namespace PointerSurvival
         {
             weapon.Shoot(position.X, position.Y,playerDirection);
         }
+
+        public bool isHit(Item item)
+        {
+
+            return false;
+        }
     }
 }

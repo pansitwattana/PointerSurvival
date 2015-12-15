@@ -38,6 +38,14 @@ namespace PointerSurvival
             }
         }
 
+        public void NotifyItem()
+        {
+            foreach(View m in oList)
+            {
+                m.NotifyItem(this);
+            }
+        }
+
         public void AttachObserver(View m)
         {
             oList.Add(m);

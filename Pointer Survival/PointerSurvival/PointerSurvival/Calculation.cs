@@ -12,9 +12,7 @@ namespace PointerSurvival
         public const int Plus = -1;
         public const int Minus = -2;
         public const int Multiply = -3;
-        public const int Divide = -4;
         public const int UnknownOp = 0;
-        public const int Item = -5;
         /*var rnd = new Random();
         var userScore = 0;
         var totalProblems = 0;

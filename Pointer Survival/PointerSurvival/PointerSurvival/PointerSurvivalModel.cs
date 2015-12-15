@@ -142,6 +142,11 @@ namespace PointerSurvival
             NotifyBullet();
         }
 
+        public Item GetItem()
+        {
+            return items.ElementAt(items.Count - 1);
+        }
+
         public Obstacle GetLastAsteroids()
         {
             return obstacles.ElementAt(obstacles.Count - 1);
@@ -158,6 +163,11 @@ namespace PointerSurvival
             return obstacles;
         }
 
+        public List<Item> GetItems()
+        {
+            return items;
+        }
+
         public List<Weapon> GetBullets()
         {
 
@@ -168,6 +178,12 @@ namespace PointerSurvival
         {
             obstacles.Add(new Obstacle(player.Position.X,player.Position.Y));
             NotifyAsteroid();
+        }
+
+        public void CreateItem()
+        {
+            items.Add(new Item());
+            NotifyItem();
         }
 
         public void Remove(Weapon bullet)
@@ -209,5 +225,9 @@ namespace PointerSurvival
             return false;
         }
 
+        public bool isHit(Item item)
+        {
+            return false;
+        }
     }
 }

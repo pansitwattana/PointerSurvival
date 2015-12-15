@@ -39,7 +39,10 @@ namespace PointerSurvival
             obstacleTimer.Enabled = true;
 
             timer1.Interval = 10;
-            timer1.Enabled= true;
+            timer1.Enabled = true;
+
+            itemTimer.Interval = 10000;
+            itemTimer.Enabled = true;
         }
 
         public void Notify(Model m)
@@ -48,6 +51,7 @@ namespace PointerSurvival
             UpdatePointerY(((PointerSurvivalModel)m).GetDistanceY());
             UpdateAsteroids(((PointerSurvivalModel)m).GetAsteroids());
             UpdateBullets(((PointerSurvivalModel)m).GetBullets(), ((PointerSurvivalModel)m).GetAsteroids(), (PointerSurvivalModel)m);
+            UpdateItems(((PointerSurvivalModel)m).GetItems(), ((PointerSurvivalModel)m).GetAsteroids());
             //UpdateScore(((PointerSurvivalModel)m).GetScore());
         }
 
@@ -59,6 +63,16 @@ namespace PointerSurvival
         public void NotifyBullet(Model m)
         {
             UpdateBullet(((PointerSurvivalModel)m).GetBullet());
+        }
+
+        public void NotifyItem(Model m)
+        {
+            UpdateItem(((PointerSurvivalModel)m).GetItem());
+        }
+
+        private void UpdateItem(Item item)
+        {
+            this.Controls.Add(item.obj);
         }
 
         private void UpdateBullet(Weapon bullet)
@@ -120,6 +134,23 @@ namespace PointerSurvival
                     //}
                 }
         }
+
+        private void UpdateItems(List<Item> items, List<Obstacle> obstacles)
+        {
+            if (items.Count > 0)
+                foreach (Item item in items)
+                {
+                    if (item.Update(pointerBox))
+                    {
+                        item.RunAbility(obstacles);
+                        item.obj.Dispose();
+                        this.Controls.Remove(item.obj);
+                        items.Remove(item);
+                        break;
+                    }
+                }
+        }
+
         private void UpdateBullets(List<Weapon> bullets,List<Obstacle> obstacles, PointerSurvivalModel m)
         {
             if (bullets.Count > 0)
@@ -294,6 +325,11 @@ namespace PointerSurvival
                 m_left = false;
             if (e.Button == MouseButtons.Right)
                 m_right = false;
+        }
+
+        private void itemTimer_Tick(object sender, EventArgs e)
+        {
+            controller.ActionPerformed(PointerSurvivalController.ItemSpawn);
         }
     }
 }

@@ -37,6 +37,7 @@
             this.num2lbl = new System.Windows.Forms.Label();
             this.answerlbl = new System.Windows.Forms.Label();
             this.scorelbl = new System.Windows.Forms.Label();
+            this.itemTimer = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.PointerBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -115,6 +116,12 @@
             this.scorelbl.TabIndex = 7;
             this.scorelbl.Text = "0";
             // 
+            // itemTimer
+            // 
+            this.itemTimer.Enabled = true;
+            this.itemTimer.Interval = 10000;
+            this.itemTimer.Tick += new System.EventHandler(this.itemTimer_Tick);
+            // 
             // PointerSurvivalView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -157,6 +164,7 @@
         private System.Windows.Forms.Label num2lbl;
         private System.Windows.Forms.Label answerlbl;
         private System.Windows.Forms.Label scorelbl;
+        private System.Windows.Forms.Timer itemTimer;
     }
 }
 

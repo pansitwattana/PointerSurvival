@@ -11,5 +11,6 @@ namespace PointerSurvival
         void Notify(Model m);
         void NotifyAsteroid(Model m);
         void NotifyBullet(Model m);
+        void NotifyItem(Model m);
     }
 }

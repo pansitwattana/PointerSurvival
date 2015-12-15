@@ -23,6 +23,7 @@ namespace PointerSurvival
         public const int UpLeft = 8;
         public const int DownLeft = 9;
         public const int DownRight = 10;
+        public const int ItemSpawn = 11;
         
 
         public override void ActionPerformed(int action)
@@ -39,6 +40,9 @@ namespace PointerSurvival
                         break;
                     case CreateAsteroid:
                         m.CreaeAsteroid();
+                        break;
+                    case ItemSpawn:
+                        m.CreateItem();
                         break;
                     case Up:
                         m.MoveUp();
