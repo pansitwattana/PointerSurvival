@@ -133,7 +133,7 @@
             // toastLabel
             // 
             this.toastLabel.AutoSize = true;
-            this.toastLabel.Location = new System.Drawing.Point(572, 96);
+            this.toastLabel.Location = new System.Drawing.Point(560, 95);
             this.toastLabel.Name = "toastLabel";
             this.toastLabel.Size = new System.Drawing.Size(93, 13);
             this.toastLabel.TabIndex = 8;

@@ -102,6 +102,7 @@ namespace PointerSurvival
         {
             if((score % PointerSurvivalController.EveryXScoreForBoss) == 0 && score > 0)
             {
+                ToastShow("Boss Stage !");
                 controller.ActionPerformed(PointerSurvivalController.StageBoss);
             }
             else
@@ -156,9 +157,7 @@ namespace PointerSurvival
                     if (item.Update(pointerBox))
                     {   
                         item.RunAbility(obstacles);
-                        toastLabel.Show();
-                        toastLabel.Text = item.Text;
-                        threesecondTimer.Start();
+                        ToastShow(item.Text);
                         item.obj.Dispose();
                         this.Controls.Remove(item.obj);
                         items.Remove(item);
@@ -377,12 +376,14 @@ namespace PointerSurvival
 
         private void timer_toast_Tick(object sender, EventArgs e)
         {
-            int fadingSpeed = 3;
-            toastLabel.ForeColor = Color.FromArgb(toastLabel.ForeColor.R + fadingSpeed, toastLabel.ForeColor.G + fadingSpeed, toastLabel.ForeColor.B + fadingSpeed);
+            int fadingSpeed = 5;
+            if(toastLabel.ForeColor.R < 251)
+                toastLabel.ForeColor = Color.FromArgb(toastLabel.ForeColor.R + fadingSpeed, toastLabel.ForeColor.G + fadingSpeed, toastLabel.ForeColor.B + fadingSpeed);
 
-            if (toastLabel.ForeColor.R >= this.BackColor.R)
+            if (toastLabel.ForeColor.R >= 250)
             {
                 timer_toast.Stop();
+                toastLabel.ForeColor = Color.FromArgb(0,0,0);
                 toastLabel.Hide();
                 toastLabel.ForeColor = this.BackColor;
             }
@@ -393,6 +394,13 @@ namespace PointerSurvival
         {
             timer_toast.Start();
             threesecondTimer.Stop();
+        }
+
+        private void ToastShow(string Text)
+        {
+            toastLabel.Show();
+            toastLabel.Text = Text;
+            threesecondTimer.Start();
         }
     }
 }
