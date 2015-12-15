@@ -13,17 +13,20 @@ namespace PointerSurvival
     {
         public static int PercentBornHidable = 10;
         public static int PercentBornChanable = 10;
+        public static int PercentBornDurable = 5;
+
         public static int TimeForExcitation = 50;
 
         public const int OperatorType = -1;
 
-        public static int SafeDistance = 200;
+        public static int SafeDistance = 220;
 
         public PictureBox obj { get; set; }
         public Point Position { get; set; }
 
         public bool isHidable { get; set; }
         public bool isChangable { get; set; }
+        public bool isDurable { get; set; }
 
         public int Number { get; set; } = 0;
 
@@ -34,7 +37,7 @@ namespace PointerSurvival
             get { return speed; }
             set { speed = value; }
         }
-        private bool isActice;
+        public bool isActive { get; set; }
         private int direction;
 
         public int Direction
@@ -51,7 +54,7 @@ namespace PointerSurvival
             get { return baseNumber; }
             set
             {
-                if(baseNumber != OperatorType && (Number > 0))
+                if (baseNumber != OperatorType && (Number > 0))
                 {
                     ChangeNumberToBaseN(value);
                     baseNumber = value;
@@ -73,12 +76,13 @@ namespace PointerSurvival
             goX = playerX > obj.Left;
             goY = playerY > obj.Top;
             if (isBoss) BaseNumber = 2;
+            else baseNumber = 10;
             Update();
         }
 
         private void CreateImageWith(string symbol, Point point, int speed)
         {
-            if(obj == null)
+            if (obj == null)
             {
                 obj = new PictureBox();
             }
@@ -93,17 +97,21 @@ namespace PointerSurvival
 
             int symbolsize = 0;
             Point symbolLocation;
-            if(Number > 0)
+            Brush brush;
+            if (Number > 0)
             {
+                brush = Brushes.Black;
                 symbolsize = 15;
                 symbolLocation = new Point(25, 25);
             }
             else
             {
+                brush = Brushes.Red;
                 symbolsize = 25;
                 symbolLocation = new Point(20, 20);
             }
-            g.DrawString(symbol, new Font("Tahoma", symbolsize), Brushes.Black, symbolLocation);
+
+            g.DrawString(symbol, new Font("Tahoma", symbolsize), brush, symbolLocation);
 
             g.Flush();
 
@@ -111,7 +119,7 @@ namespace PointerSurvival
             obj.Location = location;
             obj.Size = new Size(Size, Size);
             obj.SizeMode = PictureBoxSizeMode.StretchImage;
-            isActice = true;
+            isActive = true;
             this.speed = speed;
             //PictureBox mainSprite = new PictureBox();
             //mainSprite.Size = new Size(Size,Size);
@@ -148,8 +156,8 @@ namespace PointerSurvival
                          'A', 'B', 'C', 'D', 'E', 'F'});
                     break;
             }
-            CreateImageWith(numberInBaseN, obj.Location,Speed);
-        }    
+            CreateImageWith(numberInBaseN, obj.Location, Speed);
+        }
 
         private void RandomType()
         {
@@ -170,6 +178,17 @@ namespace PointerSurvival
             else
             {
                 isChangable = false;
+            }
+
+            if (Calculation.random.Next(100) < PercentBornDurable)
+            {
+                speed = 1;
+                obj.Size = new Size(200, 200);
+                isDurable = true;
+            }
+            else
+            {
+                isDurable = false;
             }
 
             if (Number >= 0)
@@ -199,7 +218,7 @@ namespace PointerSurvival
         }
         private string GenerateNumber()
         {
-            Number = Calculation.random.Next(1,10);
+            Number = Calculation.random.Next(1, 10);
 
             string symbol;
             if (Number > 0)
@@ -267,20 +286,19 @@ namespace PointerSurvival
         private bool goY;
 
         public void RunAbility()
-        { 
+        {
             if (isChangable)
             {
-                if(counter % TimeForExcitation == 0) 
+                if (counter % TimeForExcitation == 0)
                 {
-
-                    if(BaseNumber == 10)
+                    if (BaseNumber == 10)
                         CreateImageWith(GenerateNumberOrOperator(), obj.Location, Speed);
                     else if (BaseNumber == 2 && Number >= 0)
                     {
                         string number = Calculation.ConvertBase(int.Parse(GenerateNumber()), new char[] { '0', '1' });
                         CreateImageWith(number, obj.Location, Speed);
                     }
-                } 
+                }
             }
             counter++;
         }
@@ -295,7 +313,7 @@ namespace PointerSurvival
 
         public void Move()
         {
-            if (isActice)
+            if (isActive)
             {
                 //Check X coord
                 if (goX)
@@ -320,6 +338,16 @@ namespace PointerSurvival
             }
         }
 
+        public bool isOutOfBoundary()
+        {
+            if (obj.Location.X < -300 || obj.Location.X > 1500 || obj.Location.Y < -300 || obj.Location.Y > 1100)
+            {
+                isDurable = false;
+                isActive = false;
+                return true;
+            }
+            return false;
+        }
         public void Bounce(Obstacle o)
         {
             //if (isHit(o))
@@ -345,48 +373,53 @@ namespace PointerSurvival
             //bomb.Image = PointerSurvival.Properties.Resources.explosion1;
             //bomb.BackColor = Color.Transparent;
 
-            obj.Dispose();
+            if (!isDurable)
+            {
+                isActive = false;
+                obj.Dispose();
+            }
+            else
+            {
+                isActive = true;
+            }
+
 
 
         }
 
         public bool isHit()
         {
-            if (isActice)
-            {
-                if (PointerSurvivalView.pointerBox.Left <= obj.Right && obj.Left <= PointerSurvivalView.pointerBox.Right &&
-                            PointerSurvivalView.pointerBox.Top <= obj.Bottom && obj.Top <= PointerSurvivalView.pointerBox.Bottom)
-                {
-                    isActice = false;
-                    return true;
-                }
-            }
 
+            if (PointerSurvivalView.pointerBox.Left <= obj.Right && obj.Left <= PointerSurvivalView.pointerBox.Right &&
+                        PointerSurvivalView.pointerBox.Top <= obj.Bottom && obj.Top <= PointerSurvivalView.pointerBox.Bottom)
+            {
+                return true;
+            }
             return false;
         }
 
         public bool isHit(Weapon w)
         {
-            if (isActice)
+
+            if (w.obj.Left <= obj.Right && obj.Left <= w.obj.Right &&
+                        w.obj.Top <= obj.Bottom && obj.Top <= w.obj.Bottom)
             {
-                if (w.obj.Left <= obj.Right && obj.Left <= w.obj.Right &&
-                            w.obj.Top <= obj.Bottom && obj.Top <= w.obj.Bottom)
-                {
-                    isActice = false;
-                    return true;
-                }
+
+
+                return true;
             }
+
 
             return false;
         }
         public bool isHit(Obstacle w)
         {
-            if (isActice)
+            if (isActive)
             {
                 if (w.obj.Left <= obj.Right && obj.Left <= w.obj.Right &&
                                             w.obj.Top <= obj.Bottom && obj.Top <= w.obj.Bottom)
                 {
-                    isActice = false;
+                    isActive = false;
                     return true;
                 }
             }
@@ -395,3 +428,5 @@ namespace PointerSurvival
         }
     }
 }
+
+

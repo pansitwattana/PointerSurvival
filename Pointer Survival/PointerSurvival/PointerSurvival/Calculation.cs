@@ -141,6 +141,50 @@ namespace PointerSurvival
 
 
         private int count = 1;
+
+        public void storevalue(int num,bool isRight)
+        {
+            if (num > 0)
+            {
+                if (isRight)
+                {
+                    num2 = num;
+                }
+                else
+                {
+                    num1 = num;
+                }
+            }
+            else
+            {
+                switch (num)
+                {
+                    // case0 = reset fn
+                    case 0:
+                        num1 = 0;
+                        num2 = 0;
+                        operatorsign = 0;
+                        answer = 0;
+                        symbol = " ";
+                        score = 0;
+                        break;
+                    case -1:
+                        operatorsign = 1;
+                        break;
+                    case -2:
+                        operatorsign = 2;
+                        break;
+                    case -3:
+                        operatorsign = 3;
+                        break;
+                    case -4:
+                        operatorsign = 4;
+                        break;
+                }
+            }
+                
+        }
+
         public void storevalue(int rnum)
         {
             if (rnum > 0)

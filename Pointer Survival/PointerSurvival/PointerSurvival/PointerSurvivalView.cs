@@ -53,7 +53,6 @@ namespace PointerSurvival
             UpdateBullets(((PointerSurvivalModel)m).GetBullets(), ((PointerSurvivalModel)m).GetAsteroids(), (PointerSurvivalModel)m);
             UpdateItems(((PointerSurvivalModel)m).GetItems(), ((PointerSurvivalModel)m).GetAsteroids());
             UpdateBoss(((PointerSurvivalModel)m).GetScore());
-            //UpdateScore(((PointerSurvivalModel)m).GetScore());
         }
 
         
@@ -88,26 +87,20 @@ namespace PointerSurvival
             this.Controls.Add(p.obj);
         }
 
-        private void UpdateScore(object p)
-        {
-            throw new NotImplementedException();
-        }
-
         private void UpdatePointerX(int distanceX)
         {
+
             PointerBox.Left = distanceX;
-            //PointerBox.Left += distanceX - PointerBox.Location.X;
         }
 
         private void UpdatePointerY(int distanceY)
         {
             PointerBox.Top = distanceY;
-            //PointerBox.Top += distanceY - PointerBox.Location.Y;
         }
 
         private void UpdateBoss(int score)
         {
-            if((score % PointerSurvivalController.EveryXScoreForBoss == 0) && score > 0)
+            if((score % PointerSurvivalController.EveryXScoreForBoss) == 0 && score > 0)
             {
                 controller.ActionPerformed(PointerSurvivalController.StageBoss);
             }
@@ -128,6 +121,11 @@ namespace PointerSurvival
                         this.Controls.Remove(o.obj);
                         PointerBox.Hide();
                         Close();
+                    }
+                    if (o.isOutOfBoundary())
+                    {
+                        o.Destroy();
+                        this.Controls.Remove(o.obj);
                     }
                     //if (!this.ClientRectangle.IntersectsWith(o.obj.Bounds))
                     //{
@@ -179,7 +177,7 @@ namespace PointerSurvival
                     {
                         if (o.isHit(bullet))
                         {
-                            m.cal.storevalue(o.Number);
+                            m.cal.storevalue(o.Number,bullet.isRight);
 
                             if (m.cal.checkans(int.Parse(answerlbl.Text)))
                             {
@@ -191,13 +189,18 @@ namespace PointerSurvival
                             operationlbl.Text = m.cal.getSymbol;
                             scorelbl.Text = "" + m.cal.getScore;
 
-                            o.obj.Dispose();
+                            o.Destroy();
                             bullet.obj.Dispose();
 
-                            this.Controls.Remove(o.obj);
+                            if (!o.isActive)
+                            {
+                                this.Controls.Remove(o.obj);
+                                m.Remove(o);
+                            }
+                                
                             this.Controls.Remove(bullet.obj);
 
-                            m.Remove(o);
+                            
                             m.Remove(bullet);
                             isHit = true;
                             break;
@@ -220,7 +223,7 @@ namespace PointerSurvival
         {
             if (e.KeyCode == Keys.Space)
             {
-                controller.ActionPerformed(PointerSurvivalController.Fire);
+                controller.ActionPerformed(PointerSurvivalController.Fire1);
             }
 
             if (e.KeyCode == Keys.W && e.Modifiers == Keys.D)
@@ -257,12 +260,28 @@ namespace PointerSurvival
             {
                 controller.ActionPerformed(PointerSurvivalController.Right);
             }
-            
-            //for test
-            else if (e.KeyCode == Keys.Z)
+
+            if (e.KeyCode == Keys.Left)
             {
-                controller.ActionPerformed(99);
+                m_left = true;
+                controller.ActionPerformed(PointerSurvivalController.Fire1);
             }
+            if (e.KeyCode == Keys.Right)
+            {
+                m_right = true;
+                controller.ActionPerformed(PointerSurvivalController.Fire2);
+            }
+
+            if (m_left == false || m_right == false) return;
+        }
+
+
+        private void PointerSurvivalView_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Left)
+                m_left = false;
+            if (e.KeyCode == Keys.Right)
+                m_right = false;
         }
 
         private void Form1_MouseMove(object sender, MouseEventArgs e)
@@ -274,29 +293,18 @@ namespace PointerSurvival
         {
             this.Refresh();
             controller.ActionPerformed(PointerSurvivalController.TimeTick);
-
-
-            //player.Accelerate(MousePosition.X, MousePosition.Y);
-            //foreach (Obstacle obstacle in obstacles)
-            //{
-            //    obstacle.Move();
-            //}
-            //Bitmap resultPicture = MoveImageByDesiredAngle(playerPicture.Image.Width, playerPicture.Image.Height, 30);
-            //playerPicture.Image = resultPicture;
         }
 
         private void obstacleTimer_Tick(object sender, EventArgs e)
         {
             controller.ActionPerformed(PointerSurvivalController.CreateAsteroid);
-            //Obstacle obstacle = new Obstacle();
-            //obstacles.Add(obstacle);
         }
 
         
 
         private void Form1_MouseClick(object sender, MouseEventArgs e)
         {
-            controller.ActionPerformed(PointerSurvivalController.Fire);
+
         }
 
         private void PointerSurvivalView_FormClosed(object sender, FormClosedEventArgs e)
@@ -326,12 +334,14 @@ namespace PointerSurvival
             if (e.Button == MouseButtons.Left)
             {
                 m_left = true;
-                Console.WriteLine("Test Mouse Left Clicked");
+                controller.ActionPerformed(PointerSurvivalController.Fire1);
+                Console.WriteLine("Left Clicked");
             }
             if (e.Button == MouseButtons.Right)
             {
                 m_right = true;
-                Console.WriteLine("Mouse Right Clicked");
+                controller.ActionPerformed(PointerSurvivalController.Fire2);
+                Console.WriteLine("Right Clicked");
             }
 
             if (m_left == false || m_right == false) return;
@@ -352,5 +362,6 @@ namespace PointerSurvival
         {
             controller.ActionPerformed(PointerSurvivalController.ItemSpawn);
         }
+
     }
 }

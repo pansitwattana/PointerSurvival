@@ -26,13 +26,18 @@ namespace PointerSurvival
         public Player()
         {
             Position = PositionStart;
-            weapon = new Weapon(Weapon.Normal);
-
         }
 
         public void Fire(int playerDirection)
         {
+            weapon = new Weapon(Weapon.Left);
             weapon.Shoot(position.X, position.Y,playerDirection);
+        }
+
+        public void Fire2(int playerDirection)
+        {
+            weapon = new Weapon(Weapon.Right);
+            weapon.Shoot(position.X, position.Y, playerDirection);
         }
 
         public bool isHit(Item item)

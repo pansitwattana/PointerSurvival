@@ -10,12 +10,12 @@ namespace PointerSurvival
 {
     class Weapon
     {
-        public const int Normal = 0;
-        public const int ThreeGun = 1;
+        public const int Left = 0;
+        public const int Right = 1;
 
         public int Type { get; set; }
-        public int Damage { get; set; }
-        public int Speed { get; set; }
+
+        public bool isRight { get; set; }
 
         private bool isActive;
         public PictureBox obj { get; set; }
@@ -26,13 +26,11 @@ namespace PointerSurvival
             Type = t;
             switch (t)
             {
-                case Normal:
-                    Damage = 1;
-                    Speed = 5;
+                case Left:
+                    isRight = false;
                     break;
-                case ThreeGun:
-                    Damage = 2;
-                    Speed = 5;
+                case Right:
+                    isRight = true;
                     break;
             }
         }
@@ -46,7 +44,12 @@ namespace PointerSurvival
             mainSprite.Size = new Size(10, 10);
             mainSprite.Location = new Point(x, y);
 
-            mainSprite.BackColor = Color.Black;
+            if(Type == Right)
+                mainSprite.BackColor = Color.Red;
+            else
+            {
+                mainSprite.BackColor = Color.LightSkyBlue;
+            }
             obj = mainSprite;
             goX = Form.MousePosition.X > x;
             goY = Form.MousePosition.Y > y;
@@ -76,24 +79,6 @@ namespace PointerSurvival
                 {
                     obj.Left -= PointerSurvivalController.BulletSpeed;
                 }
-                //if (goX)
-                //{
-                //    obj.Left += PointerSurvivalController.BulletSpeed;
-                //}
-                //else
-                //{
-                //    obj.Left -= PointerSurvivalController.BulletSpeed;
-                //}
-
-                ////Check Y coord
-                //if (goY)
-                //{
-                //    obj.Top += PointerSurvivalController.BulletSpeed;
-                //}
-                //else
-                //{
-                //    obj.Top -= PointerSurvivalController.BulletSpeed;
-                //}
             }
             
         }

@@ -74,65 +74,57 @@ namespace PointerSurvival
         {
             playerDirection = DirectionDownLeft;
         }
+
+        public bool isOutOfBoundary()
+        {
+            if (player.Position.X < 0 || player.Position.X > 1200 || player.Position.Y < 0 || player.Position.Y > 700)
+            {
+                return true;
+            }
+            return false;
+        }
+
         public void TimeTick()
         {
-            
-            if (playerDirection == DirectionUpRight)
+            if (!isOutOfBoundary())
             {
-                player.Position = new Point(player.Position.X, player.Position.Y - PointerSurvivalController.Speed);
-                player.Position = new Point(player.Position.X + PointerSurvivalController.Speed, player.Position.Y);
+                if (playerDirection == DirectionRight)
+                {
+                    player.Position = new Point(player.Position.X + PointerSurvivalController.Speed, player.Position.Y);
+                }
+                else if (playerDirection == DirectionLeft)
+                {
+                    player.Position = new Point(player.Position.X - PointerSurvivalController.Speed, player.Position.Y);
+                }
+                else if (playerDirection == DirectionUp)
+                {
+                    player.Position = new Point(player.Position.X, player.Position.Y - PointerSurvivalController.Speed);
+                }
+                else if (playerDirection == DirectionDown)
+                {
+                    player.Position = new Point(player.Position.X, player.Position.Y + PointerSurvivalController.Speed);
+                }
             }
-            else if (playerDirection == DirectionUpLeft)
+            else
             {
-                player.Position = new Point(player.Position.X, player.Position.Y - PointerSurvivalController.Speed);
-                player.Position = new Point(player.Position.X - PointerSurvivalController.Speed, player.Position.Y);
+                if (playerDirection == DirectionRight)
+                {
+                    player.Position = new Point(1, player.Position.Y);
+                }
+                else if (playerDirection == DirectionLeft)
+                {
+                    player.Position = new Point(1199, player.Position.Y);
+                }
+                else if (playerDirection == DirectionUp)
+                {
+                    player.Position = new Point(player.Position.X, 699);
+                }
+                else if (playerDirection == DirectionDown)
+                {
+                    player.Position = new Point(player.Position.X, 1);
+                }
             }
-            else if (playerDirection == DirectionDownRight)
-            {
-                player.Position = new Point(player.Position.X, player.Position.Y + PointerSurvivalController.Speed);
-                player.Position = new Point(player.Position.X + PointerSurvivalController.Speed, player.Position.Y);
-            }
-            else if (playerDirection == DirectionDownLeft)
-            {
-                player.Position = new Point(player.Position.X, player.Position.Y + PointerSurvivalController.Speed);
-                player.Position = new Point(player.Position.X - PointerSurvivalController.Speed, player.Position.Y);
-            }
-            else if (playerDirection == DirectionRight)
-            {
-                player.Position = new Point(player.Position.X + PointerSurvivalController.Speed, player.Position.Y);
-            }
-            else if (playerDirection == DirectionLeft)
-            {
-                player.Position = new Point(player.Position.X - PointerSurvivalController.Speed, player.Position.Y);
-            }
-            else if (playerDirection == DirectionUp)
-            {
-                player.Position = new Point(player.Position.X, player.Position.Y - PointerSurvivalController.Speed);
-            }
-            else if (playerDirection == DirectionDown)
-            {
-                player.Position = new Point(player.Position.X, player.Position.Y + PointerSurvivalController.Speed);
-            }
-            ////Check X coord
-            //if (goRight)
-            //{
-            //    player.Position = new Point(player.Position.X + PointerSurvivalController.Speed, player.Position.Y);
-            //}
-            //else
-            //{
-            //    player.Position = new Point(player.Position.X - PointerSurvivalController.Speed, player.Position.Y);
-            //}
 
-            ////Check Y coord
-            //if (goUp)
-            //{
-            //    player.Position = new Point(player.Position.X, player.Position.Y + PointerSurvivalController.Speed);
-            //}
-            //else
-            //{
-            //    player.Position = new Point(player.Position.X, player.Position.Y - PointerSurvivalController.Speed);
-            //}
-            ////Console.WriteLine(player.Position);
             NotifyAll();
         }
 
@@ -146,9 +138,16 @@ namespace PointerSurvival
             isBoss = false;
         }
 
-        public void Fire()
+        public void Fire1()
         {
             player.Fire(playerDirection);
+            bullets.Add(player.weapon);
+            NotifyBullet();
+        }
+
+        public void Fire2()
+        {
+            player.Fire2(playerDirection);
             bullets.Add(player.weapon);
             NotifyBullet();
         }
