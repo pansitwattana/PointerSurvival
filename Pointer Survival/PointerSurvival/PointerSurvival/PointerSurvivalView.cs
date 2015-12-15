@@ -52,8 +52,11 @@ namespace PointerSurvival
             UpdateAsteroids(((PointerSurvivalModel)m).GetAsteroids());
             UpdateBullets(((PointerSurvivalModel)m).GetBullets(), ((PointerSurvivalModel)m).GetAsteroids(), (PointerSurvivalModel)m);
             UpdateItems(((PointerSurvivalModel)m).GetItems(), ((PointerSurvivalModel)m).GetAsteroids());
+            UpdateBoss(((PointerSurvivalModel)m).GetScore());
             //UpdateScore(((PointerSurvivalModel)m).GetScore());
         }
+
+        
 
         public void NotifyAsteroid(Model m)
         {
@@ -100,6 +103,18 @@ namespace PointerSurvival
         {
             PointerBox.Top = distanceY;
             //PointerBox.Top += distanceY - PointerBox.Location.Y;
+        }
+
+        private void UpdateBoss(int score)
+        {
+            if((score % PointerSurvivalController.EveryXScoreForBoss == 0) && score > 0)
+            {
+                controller.ActionPerformed(PointerSurvivalController.StageBoss);
+            }
+            else
+            {
+                controller.ActionPerformed(PointerSurvivalController.StageNormal);
+            }
         }
 
         private void UpdateAsteroids(List<Obstacle> obstacles)
@@ -168,7 +183,7 @@ namespace PointerSurvival
 
                             if (m.cal.checkans(int.Parse(answerlbl.Text)))
                             {
-                                answerlbl.Text = "" + Obstacle.random.Next(1,20);
+                                answerlbl.Text = "" + Calculation.random.Next(1,20);
                             }
 
                             num1lbl.Text = "" + m.cal.getNum1;
@@ -242,6 +257,12 @@ namespace PointerSurvival
             {
                 controller.ActionPerformed(PointerSurvivalController.Right);
             }
+            
+            //for test
+            else if (e.KeyCode == Keys.Z)
+            {
+                controller.ActionPerformed(99);
+            }
         }
 
         private void Form1_MouseMove(object sender, MouseEventArgs e)
@@ -271,7 +292,7 @@ namespace PointerSurvival
             //obstacles.Add(obstacle);
         }
 
-
+        
 
         private void Form1_MouseClick(object sender, MouseEventArgs e)
         {

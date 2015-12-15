@@ -9,6 +9,8 @@ namespace PointerSurvival
     class Calculation
     {
 
+        public static Random random = new Random();
+
         public const int Plus = -1;
         public const int Minus = -2;
         public const int Multiply = -3;
@@ -182,7 +184,22 @@ namespace PointerSurvival
                 }
             }
         }
-        
+
+        public static string ConvertBase(int value, char[] baseChars)
+        {
+            string result = string.Empty;
+            int targetBase = baseChars.Length;
+
+            do
+            {
+                result = baseChars[value % targetBase] + result;
+                value = value / targetBase;
+            }
+
+            while (value > 0);
+
+            return result;
+        }
 
     }
 }

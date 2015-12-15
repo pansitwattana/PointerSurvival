@@ -30,7 +30,7 @@ namespace PointerSurvival
 
         public void RandomType()
         {
-            ItemType = Obstacle.random.Next(2);
+            ItemType = Calculation.random.Next(2);
             switch (ItemType)
             {
                 case SpeedRandomItem:
@@ -50,7 +50,7 @@ namespace PointerSurvival
                 obj = new PictureBox();
             }
             Bitmap bmp = new Bitmap(PointerSurvival.Properties.Resources.obstacle);
-            Point location = new Point(Obstacle.random.Next(1200),Obstacle.random.Next(700));
+            Point location = new Point(Calculation.random.Next(1200), Calculation.random.Next(700));
             Graphics g = Graphics.FromImage(bmp);
 
 
@@ -89,7 +89,7 @@ namespace PointerSurvival
             switch (ItemType)
             {
                 case SpeedRandomItem:
-                    PointerSurvivalController.Speed = Obstacle.random.Next(1, 4);
+                    PointerSurvivalController.Speed = Calculation.random.Next(1, 4);
                     break;
                 case ChangeBaseNumberItem:
                     foreach (Obstacle o in obstacles)

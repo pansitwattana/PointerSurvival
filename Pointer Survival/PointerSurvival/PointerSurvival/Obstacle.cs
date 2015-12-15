@@ -17,7 +17,6 @@ namespace PointerSurvival
 
         public const int OperatorType = -1;
 
-        public static Random random = new Random();
         public static int SafeDistance = 200;
 
         public PictureBox obj { get; set; }
@@ -62,17 +61,18 @@ namespace PointerSurvival
 
         private int counter = 0;
 
-        public Obstacle(int playerX, int playerY)
+        public Obstacle(int playerX, int playerY, bool isBoss)
         {
-            CreateObstacle(playerX, playerY);
+            CreateObstacle(playerX, playerY, isBoss);
         }
 
-        private void CreateObstacle(int playerX, int playerY)
+        private void CreateObstacle(int playerX, int playerY, bool isBoss)
         {
-            CreateImageWith(GenerateNumberOrOperator(), RandomLocationWithSafeDistanceFrom(playerX, playerY), random.Next(1, 4));
+            CreateImageWith(GenerateNumberOrOperator(), RandomLocationWithSafeDistanceFrom(playerX, playerY), Calculation.random.Next(1, 4));
             RandomType();
             goX = playerX > obj.Left;
             goY = playerY > obj.Top;
+            if (isBoss) BaseNumber = 2;
             Update();
         }
 
@@ -138,38 +138,22 @@ namespace PointerSurvival
             switch (n)
             {
                 case 2:
-                    numberInBaseN = ConvertBase(Number, new char[] { '0', '1' });
+                    numberInBaseN = Calculation.ConvertBase(Number, new char[] { '0', '1' });
                     break;
                 case 8:
-                    numberInBaseN = ConvertBase(Number, new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8' });
+                    numberInBaseN = Calculation.ConvertBase(Number, new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8' });
                     break;
                 case 16:
-                    numberInBaseN = ConvertBase(Number, new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+                    numberInBaseN = Calculation.ConvertBase(Number, new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
                          'A', 'B', 'C', 'D', 'E', 'F'});
                     break;
             }
             CreateImageWith(numberInBaseN, obj.Location,Speed);
-        }
-
-        public static string ConvertBase(int value, char[] baseChars)
-        {
-            string result = string.Empty;
-            int targetBase = baseChars.Length;
-
-            do
-            {
-                result = baseChars[value % targetBase] + result;
-                value = value / targetBase;
-            }
-            while (value > 0);
-
-            return result;
-        }
-
+        }    
 
         private void RandomType()
         {
-            if (random.Next(100) < PercentBornHidable)
+            if (Calculation.random.Next(100) < PercentBornHidable)
             {
                 CreateImageWith("?", obj.Location, Speed);
                 isHidable = true;
@@ -179,7 +163,7 @@ namespace PointerSurvival
                 isHidable = false;
             }
 
-            if (random.Next(100) < PercentBornChanable)
+            if (Calculation.random.Next(100) < PercentBornChanable)
             {
                 isChangable = true;
             }
@@ -200,27 +184,56 @@ namespace PointerSurvival
 
         private Point RandomLocationWithSafeDistanceFrom(int playerX, int playerY)
         {
-            int x = random.Next(1200);
-            int y = random.Next(700);
+            int x = Calculation.random.Next(1200);
+            int y = Calculation.random.Next(700);
             while (Math.Abs(x - playerX) < SafeDistance)
             {
-                x = random.Next(1200);
+                x = Calculation.random.Next(1200);
             }
             while (Math.Abs(y - playerY) < SafeDistance)
             {
-                y = random.Next(700);
+                y = Calculation.random.Next(700);
             }
 
             return new Point(x, y);
         }
+        private string GenerateNumber()
+        {
+            Number = Calculation.random.Next(1,10);
 
+            string symbol;
+            if (Number > 0)
+            {
+                symbol = Number.ToString();
+            }
+            else
+            {
+                if (Number == Calculation.Plus)
+                {
+                    symbol = "+";
+                }
+                else if (Number == Calculation.Minus)
+                {
+                    symbol = "-";
+                }
+                else if (Number == Calculation.Multiply)
+                {
+                    symbol = "*";
+                }
+                else
+                {
+                    symbol = "Error";
+                }
+            }
+            return symbol;
+        }
         private string GenerateNumberOrOperator()
         {
-            Number = random.Next(14) - 3;
+            Number = Calculation.random.Next(14) - 3;
 
             while (Number == 0)
             {
-                Number = random.Next(14) - 3;
+                Number = Calculation.random.Next(14) - 3;
             }
 
             string symbol;
@@ -259,11 +272,13 @@ namespace PointerSurvival
             {
                 if(counter % TimeForExcitation == 0) 
                 {
+
                     if(BaseNumber == 10)
                         CreateImageWith(GenerateNumberOrOperator(), obj.Location, Speed);
-                    else if (BaseNumber == 2 && Number > 0)
+                    else if (BaseNumber == 2 && Number >= 0)
                     {
-                        CreateImageWith(ConvertBase(int.Parse(GenerateNumberOrOperator()), new char[] { '0', '1' }), obj.Location, Speed);
+                        string number = Calculation.ConvertBase(int.Parse(GenerateNumber()), new char[] { '0', '1' });
+                        CreateImageWith(number, obj.Location, Speed);
                     }
                 } 
             }

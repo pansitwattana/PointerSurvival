@@ -12,6 +12,8 @@ namespace PointerSurvival
         public static int Speed = 2;
         public static int TimeToCreateAsteroid = 1;
         public static int BulletSpeed = 10;
+        public static int EveryXScoreForBoss = 4;
+
         public const int TimeTick = 0;
         public const int Fire = 1;
         public const int CreateAsteroid = 2;
@@ -24,7 +26,8 @@ namespace PointerSurvival
         public const int DownLeft = 9;
         public const int DownRight = 10;
         public const int ItemSpawn = 11;
-        
+        public const int StageBoss = 12;
+        public const int StageNormal = 13;
 
         public override void ActionPerformed(int action)
         {
@@ -67,6 +70,16 @@ namespace PointerSurvival
                         break;
                     case DownRight:
                         m.MoveDownRight();
+                        break;
+                    case StageNormal:
+                        m.BecomeBoss();
+                        break;
+                    case StageBoss:
+                        m.BecomeNormal();
+                        break;
+                    case 99:
+                        m.cal.getScore += 1;
+                        Console.WriteLine("score " + m.cal.getScore);
                         break;
                 }
             }
