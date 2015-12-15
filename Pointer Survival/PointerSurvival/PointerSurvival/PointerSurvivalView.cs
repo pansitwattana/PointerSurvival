@@ -22,7 +22,6 @@ namespace PointerSurvival
         private bool m_right = false;
         private bool m_left = false;
 
-
         public PointerSurvivalView()
         {
             InitializeComponent();
@@ -43,6 +42,7 @@ namespace PointerSurvival
 
             itemTimer.Interval = 10000;
             itemTimer.Enabled = true;
+
         }
 
         public void Notify(Model m)
@@ -154,8 +154,11 @@ namespace PointerSurvival
                 foreach (Item item in items)
                 {
                     if (item.Update(pointerBox))
-                    {
+                    {   
                         item.RunAbility(obstacles);
+                        toastLabel.Show();
+                        toastLabel.Text = item.Text;
+                        threesecondTimer.Start();
                         item.obj.Dispose();
                         this.Controls.Remove(item.obj);
                         items.Remove(item);
@@ -372,5 +375,24 @@ namespace PointerSurvival
             controller.ActionPerformed(PointerSurvivalController.ItemSpawn);
         }
 
+        private void timer_toast_Tick(object sender, EventArgs e)
+        {
+            int fadingSpeed = 3;
+            toastLabel.ForeColor = Color.FromArgb(toastLabel.ForeColor.R + fadingSpeed, toastLabel.ForeColor.G + fadingSpeed, toastLabel.ForeColor.B + fadingSpeed);
+
+            if (toastLabel.ForeColor.R >= this.BackColor.R)
+            {
+                timer_toast.Stop();
+                toastLabel.Hide();
+                toastLabel.ForeColor = this.BackColor;
+            }
+
+        }
+
+        private void threesecondTimer_Tick(object sender, EventArgs e)
+        {
+            timer_toast.Start();
+            threesecondTimer.Stop();
+        }
     }
 }

@@ -38,6 +38,9 @@
             this.answerlbl = new System.Windows.Forms.Label();
             this.scorelbl = new System.Windows.Forms.Label();
             this.itemTimer = new System.Windows.Forms.Timer(this.components);
+            this.timer_toast = new System.Windows.Forms.Timer(this.components);
+            this.toastLabel = new System.Windows.Forms.Label();
+            this.threesecondTimer = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.PointerBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -122,12 +125,33 @@
             this.itemTimer.Interval = 10000;
             this.itemTimer.Tick += new System.EventHandler(this.itemTimer_Tick);
             // 
+            // timer_toast
+            // 
+            this.timer_toast.Interval = 1;
+            this.timer_toast.Tick += new System.EventHandler(this.timer_toast_Tick);
+            // 
+            // toastLabel
+            // 
+            this.toastLabel.AutoSize = true;
+            this.toastLabel.Location = new System.Drawing.Point(572, 96);
+            this.toastLabel.Name = "toastLabel";
+            this.toastLabel.Size = new System.Drawing.Size(93, 13);
+            this.toastLabel.TabIndex = 8;
+            this.toastLabel.Text = "I\'m fading out now";
+            this.toastLabel.Visible = false;
+            // 
+            // threesecondTimer
+            // 
+            this.threesecondTimer.Interval = 3000;
+            this.threesecondTimer.Tick += new System.EventHandler(this.threesecondTimer_Tick);
+            // 
             // PointerSurvivalView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(1184, 661);
+            this.Controls.Add(this.toastLabel);
             this.Controls.Add(this.scorelbl);
             this.Controls.Add(this.answerlbl);
             this.Controls.Add(this.num2lbl);
@@ -166,6 +190,9 @@
         private System.Windows.Forms.Label answerlbl;
         private System.Windows.Forms.Label scorelbl;
         private System.Windows.Forms.Timer itemTimer;
+        private System.Windows.Forms.Timer timer_toast;
+        private System.Windows.Forms.Label toastLabel;
+        private System.Windows.Forms.Timer threesecondTimer;
     }
 }
 

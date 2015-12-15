@@ -16,6 +16,8 @@ namespace PointerSurvival
         
         public static int ItemSize = 30;
 
+        public string Text { get; set; }
+
         public string Name { get; set; }
 
         public PictureBox obj { get; set; }
@@ -34,10 +36,10 @@ namespace PointerSurvival
             switch (ItemType)
             {
                 case SpeedRandomItem:
-                    Name = "S";
+                    Name = "Speed";
                     break;
                 case ChangeBaseNumberItem:
-                    Name = "B";
+                    Name = "Base2";
                     break;
                 
             }
@@ -90,10 +92,28 @@ namespace PointerSurvival
             {
                 case SpeedRandomItem:
                     PointerSurvivalController.Speed = Calculation.random.Next(1, 4);
+                    
+                    switch (PointerSurvivalController.Speed)
+                    {
+                        case 1:
+                            Text = "Speed changed to Low !";
+                            break;
+                        case 2:
+                            Text = "Speed changed to Medium !";
+                            break;
+                        case 3:
+                            Text = "Speed changed to High !";
+                            break;
+                        case 4:
+                            Text = "Speed changed to Maximum !";
+                            break;
+                    }
+                    
                     break;
                 case ChangeBaseNumberItem:
                     foreach (Obstacle o in obstacles)
                         o.BaseNumber = 2;
+                    Text = "Number changed to Base 2";
                     break;
             }
             obj.Dispose();
