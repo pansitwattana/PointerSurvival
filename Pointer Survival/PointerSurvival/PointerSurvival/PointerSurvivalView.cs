@@ -173,6 +173,15 @@ namespace PointerSurvival
                 {
                     bullet.BulletMove();
 
+                    if (bullet.isOutOfBoundary())
+                    {
+                        bullet.obj.Dispose();
+                        m.Remove(bullet);
+                        this.Controls.Remove(bullet.obj);
+                        isHit = true;
+                        break;
+                    }
+
                     foreach (Obstacle o in obstacles)
                     {
                         if (o.isHit(bullet))

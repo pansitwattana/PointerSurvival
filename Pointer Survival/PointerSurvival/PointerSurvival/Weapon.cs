@@ -59,6 +59,17 @@ namespace PointerSurvival
             BulletMove();
         }
 
+        public bool isOutOfBoundary()
+        {
+            if (obj.Location.X < -300 || obj.Location.X > 1500 || obj.Location.Y < -300 || obj.Location.Y > 1100)
+            {
+                isActive = false;
+                return true;
+            }
+            return false;
+        }
+
+
         public void BulletMove()
         {
             if (isActive)
