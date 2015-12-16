@@ -22,7 +22,7 @@ namespace PointerSurvival
         private bool m_right = false;
         private bool m_left = false;
 
-        
+        List<Star> stars = new List<Star>();
 
         public PointerSurvivalView()
         {
@@ -52,6 +52,11 @@ namespace PointerSurvival
             fireTimer.Enabled = true;
             fireCount = 0;
             fireTime = 0;
+
+            for(int i = 1; i < 40; i++)
+            {
+                stars.Add(new Star(1200, 700, Calculation.random));
+            }
         }
 
         public void Notify(Model m)
@@ -96,6 +101,7 @@ namespace PointerSurvival
 
         private void UpdateNewAsteroid(Obstacle p)
         {
+            
             this.Controls.Add(p.obj);
         }
 
@@ -112,6 +118,10 @@ namespace PointerSurvival
 
         private void UpdateAsteroids(List<Obstacle> obstacles)
         {
+            foreach(Star s in stars)
+            {
+                s.move(1200,700);
+            }
             if (obstacles.Count > 0)
                 foreach (Obstacle o in obstacles)
                 {
@@ -407,7 +417,16 @@ namespace PointerSurvival
 
         private void PointerSurvivalView_Paint(object sender, PaintEventArgs e)
         {
+            Graphics g = e.Graphics;
 
+            /*foreach (var ball in balls)
+            {
+                ball.Draw(g);
+            }*/
+            for (int i = 0; i < stars.Count; i++)
+            {
+                stars[i].Draw(g);
+            }
         }
 
         private void PointerSurvivalView_MouseDown(object sender, MouseEventArgs e)

@@ -73,8 +73,6 @@ namespace PointerSurvival
         {
             CreateImageWith(GenerateNumberOrOperator(), RandomLocationWithSafeDistanceFrom(playerX, playerY), Calculation.random.Next(1, 4));
             RandomType();
-            goX = Convert.ToBoolean(Calculation.random.Next(0,1));
-            goY = Convert.ToBoolean(Calculation.random.Next(0,1));
             RandomDirection();
             if (isBoss) BaseNumber = 2;
             else baseNumber = 10;
@@ -299,9 +297,6 @@ namespace PointerSurvival
             return symbol;
         }
 
-        private bool goX;
-        private bool goY;
-
         public void SetNumberTo(int n)
         {
             CreateImageWith(GenerateNumberOrOperator(n), obj.Location, Speed);
@@ -335,12 +330,38 @@ namespace PointerSurvival
 
         public void RandomDirection()
         {
-            speedX = Calculation.random.Next(-3,3);
-            speedY = Calculation.random.Next(-3,3);
-            while (speedX == 0 && speedY == 0)
+            if (obj.Location.X < 300)
             {
-                speedX = Calculation.random.Next(-3, 3);
-                speedY = Calculation.random.Next(-3, 3);
+                speedX = Calculation.random.Next(1, 4);
+            }
+            else if (obj.Location.X > 900)
+            {
+                speedX = Calculation.random.Next(-3, 0);
+            }
+            else
+            {
+                speedX = Calculation.random.Next(-3, 4);
+                while (speedX == 0)
+                {
+                    speedX = Calculation.random.Next(-3, 4);
+                }
+            }
+
+            if (obj.Location.Y < 150)
+            {
+                speedY = Calculation.random.Next(1, 4);
+            }
+            else if (obj.Location.Y > 450)
+            {
+                speedY = Calculation.random.Next(-3, 0);
+            }
+            else
+            {
+                speedY = Calculation.random.Next(-3, 4);
+                while (speedY == 0)
+                {
+                    speedY = Calculation.random.Next(-3, 4);
+                }
             }
         }
 

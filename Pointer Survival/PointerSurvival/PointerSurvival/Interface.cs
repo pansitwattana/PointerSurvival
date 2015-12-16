@@ -23,5 +23,15 @@ namespace PointerSurvival
             Form PointerSurvival = new PointerSurvivalView();
             PointerSurvival.Show();
         }
+
+        private void Interface_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                this.Hide();
+                Form PointerSurvival = new PointerSurvivalView();
+                PointerSurvival.Show();
+            }
+        }
     }
 }

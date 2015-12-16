@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Star.cs" />
     <Compile Include="Calculation.cs" />
     <Compile Include="Controller.cs" />
     <Compile Include="Interface.cs">
