@@ -83,6 +83,11 @@ namespace PointerSurvival
             return false;
         }
 
+        public Calculation GetCalcucaltion()
+        {
+            return cal;
+        }
+
         public void TimeTick()
         {
             if (!isOutOfBoundary())

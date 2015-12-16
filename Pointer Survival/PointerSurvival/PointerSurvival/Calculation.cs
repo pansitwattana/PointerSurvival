@@ -88,6 +88,79 @@ namespace PointerSurvival
 
         public bool isBossClear { get; set; } = false;
 
+        public int getCorrectValue(int answer)
+        {
+            int Answer = 1;
+
+            if(operatorsign == UnknownOp)
+            {
+                if (num1 - num2 == answer)
+                {
+                    return Minus;
+                }
+                else if (num1 * num2 == answer)
+                {
+                    return Multiply;
+                }
+                else
+                {
+                    return Plus;
+                }
+            }
+            else
+            {
+                switch (operatorsign)
+                {
+                    case 1:
+                        if (num1 + num2 < answer)
+                        {
+                            if (num1 > num2)
+                            {
+                                Answer = answer - num1;
+                            }
+                            else
+                            {
+                                Answer = answer - num2;
+                            }
+                        }
+                        else
+                        {
+                            Answer = Minus;
+                        }
+                        break;
+                    case 2:
+                        if(num1 + num2 < answer)
+                        {
+                            Answer = Plus;
+                        }
+                        else
+                        {
+                            Answer = answer + num2;
+                        }
+                        break;
+                    case 3:
+                        if (isPrime(answer))
+                            Answer = Plus;
+                        else
+                        {
+                            if(num1 != 0)
+                                Answer = answer / num1;
+                            if(Answer * num1 != answer)
+                            {
+                                if(num2 != 0)
+                                    Answer = answer / num2;
+                                if (Answer * num2 != answer)
+                                {
+                                    Answer = Plus;
+                                }
+                            }
+                        }
+                        break;
+                }
+            }
+
+            return Answer;
+        }
 
         public bool checkans(int ans)
         {
@@ -122,7 +195,7 @@ namespace PointerSurvival
                     break;
                 case 3:
                     answer = num1 * num2;
-                    operatorString = "*";
+                    operatorString = "x";
                     symbol = operatorString;
                     //op = operatorsign;
                     if (ans == answer)
@@ -271,5 +344,19 @@ namespace PointerSurvival
             return result;
         }
 
+        public static bool isPrime(int number)
+        {
+            int boundary = number;
+
+            if (number == 1) return false;
+            if (number == 2) return true;
+
+            for (int i = 2; i <= boundary; ++i)
+            {
+                if (number % i == 0) return false;
+            }
+
+            return true;
+        }
     }
 }

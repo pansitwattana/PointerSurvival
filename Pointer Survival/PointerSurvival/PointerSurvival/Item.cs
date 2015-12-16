@@ -14,7 +14,7 @@ namespace PointerSurvival
         public const int SpeedRandomItem = 0;
         public const int ChangeBaseNumberItem = 1;
         public const int SpeedAsteroidItem = 2;
-
+        public const int AnswerAsteroidItem = 3;
         public static int ItemSize = 30;
 
         public string Text { get; set; }
@@ -33,7 +33,7 @@ namespace PointerSurvival
 
         public void RandomType()
         {
-            ItemType = Calculation.random.Next(3);
+            ItemType = Calculation.random.Next(4);
             switch (ItemType)
             {
                 case SpeedRandomItem:
@@ -44,6 +44,9 @@ namespace PointerSurvival
                     break;
                 case SpeedAsteroidItem:
                     Name = "AsteroidSpeed";
+                    break;
+                case AnswerAsteroidItem:
+                    Name = "ShowAnswer";
                     break;
 
             }
@@ -136,9 +139,41 @@ namespace PointerSurvival
             }
         }
 
-        public void RunAbility(List<Obstacle> obstacles)
+        public void RunAnswerAsteroidItem(List<Obstacle> obstacles, Calculation cal, int answer)
         {
-            switch (ItemType)
+            int ans = cal.getCorrectValue(answer);
+            
+            foreach (Obstacle o in obstacles)
+            {
+                o.SetNumberTo(ans);   
+            }
+            string symbol = " ";
+
+            switch (ans)
+            {
+                case Calculation.UnknownOp:
+                    symbol = "?";
+                    break;
+                case Calculation.Plus:
+                    symbol = "+";
+                    break;
+                case Calculation.Minus:
+                    symbol = "-";
+                    break;
+                case Calculation.Multiply:
+                    symbol = "x";
+                    break;
+                default:
+                    symbol = "" + ans;
+                    break; 
+            }
+
+            Text = "Change Asteroid Number To " + symbol + " !";
+        }
+
+        public void RunAbility(List<Obstacle> obstacles, Calculation cal, int answer)
+        {
+            switch (AnswerAsteroidItem)//ItemType)
             {
                 case SpeedRandomItem:
                     RunSpeedItem();
@@ -148,6 +183,9 @@ namespace PointerSurvival
                     break;
                 case SpeedAsteroidItem:
                     RunSpeedAsteroidItem(obstacles);
+                    break;
+                case AnswerAsteroidItem:
+                    RunAnswerAsteroidItem(obstacles, cal, answer);
                     break;
             }
             obj.Dispose();

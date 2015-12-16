@@ -46,7 +46,7 @@ namespace PointerSurvival
             timer1.Interval = 30;
             timer1.Enabled = true;
 
-            itemTimer.Interval = 10000;
+            itemTimer.Interval = 1000;
             itemTimer.Enabled = true;
 
             fireTimer.Enabled = true;
@@ -60,7 +60,7 @@ namespace PointerSurvival
             UpdatePointerY(((PointerSurvivalModel)m).GetDistanceY());
             UpdateAsteroids(((PointerSurvivalModel)m).GetAsteroids());
             UpdateBullets(((PointerSurvivalModel)m).GetBullets(), ((PointerSurvivalModel)m).GetAsteroids(), (PointerSurvivalModel)m);
-            UpdateItems(((PointerSurvivalModel)m).GetItems(), ((PointerSurvivalModel)m).GetAsteroids());
+            UpdateItems(((PointerSurvivalModel)m).GetItems(), ((PointerSurvivalModel)m).GetAsteroids(), ((PointerSurvivalModel)m).GetCalcucaltion());
 
         }
 
@@ -162,14 +162,14 @@ namespace PointerSurvival
                 }
         }
 
-        private void UpdateItems(List<Item> items, List<Obstacle> obstacles)
+        private void UpdateItems(List<Item> items, List<Obstacle> obstacles, Calculation cal)
         {
             if (items.Count > 0)
                 foreach (Item item in items)
                 {
                     if (item.Update(pointerBox))
                     {   
-                        item.RunAbility(obstacles);
+                        item.RunAbility(obstacles, cal, int.Parse(answerlbl.Text));
                         speedTxt.Text = "" + PointerSurvivalController.Speed;
                         ToastShow(item.Text);
                         item.obj.Dispose();

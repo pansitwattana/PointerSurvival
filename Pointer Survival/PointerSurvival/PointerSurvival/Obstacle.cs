@@ -263,8 +263,49 @@ namespace PointerSurvival
             return symbol;
         }
 
+        private string GenerateNumberOrOperator(int n)
+        {
+            Number = n;
+
+            while (Number == 0)
+            {
+                Number = Calculation.random.Next(14) - 3;
+            }
+
+            string symbol;
+            if (Number > 0)
+            {
+                symbol = Number.ToString();
+            }
+            else
+            {
+                if (Number == Calculation.Plus)
+                {
+                    symbol = "+";
+                }
+                else if (Number == Calculation.Minus)
+                {
+                    symbol = "-";
+                }
+                else if (Number == Calculation.Multiply)
+                {
+                    symbol = "x";
+                }
+                else
+                {
+                    symbol = "Error";
+                }
+            }
+            return symbol;
+        }
+
         private bool goX;
         private bool goY;
+
+        public void SetNumberTo(int n)
+        {
+            CreateImageWith(GenerateNumberOrOperator(n), obj.Location, Speed);
+        }
 
         public void RunAbility()
         {
