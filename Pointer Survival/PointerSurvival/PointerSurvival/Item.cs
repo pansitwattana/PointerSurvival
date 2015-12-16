@@ -91,22 +91,22 @@ namespace PointerSurvival
             switch (ItemType)
             {
                 case SpeedRandomItem:
-                    PointerSurvivalController.Speed = Calculation.random.Next(1, 5);
+                    PointerSurvivalController.Speed = Calculation.random.Next(3, 7);
                     switch (PointerSurvivalController.Speed)
                     {
-                        case 1:
+                        case 3:
                             Text = "Speed changed to Turtle !";
                             break;
-                        case 2:
+                        case 4:
                             Text = "Speed changed to Low !";
                             break;
-                        case 3:
+                        case 5:
                             Text = "Speed changed to Normal !";
                             break;
-                        case 4:
+                        case 6:
                             Text = "Speed changed to Fast !";
                             break;
-                        case 5:
+                        case 7:
                             Text = "Speed changed to the Fastest";
                             break;
                     }

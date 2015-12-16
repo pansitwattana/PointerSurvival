@@ -34,10 +34,14 @@ namespace PointerSurvival
             //Cursor.Hide();
             pointerBox = PointerBox;
 
-            obstacleTimer.Interval = PointerSurvivalController.TimeToCreateAsteroid * 1000;
+            LevelTxt.Text = "1";
+            asteroidSpawnTimeTxt.Text = "" + PointerSurvivalController.TimeToCreateAsteroid/1000;
+            speedTxt.Text = "" + PointerSurvivalController.Speed;
+
+            obstacleTimer.Interval = PointerSurvivalController.TimeToCreateAsteroid;
             obstacleTimer.Enabled = true;
 
-            timer1.Interval = 10;
+            timer1.Interval = 30;
             timer1.Enabled = true;
 
             itemTimer.Interval = 10000;
@@ -155,6 +159,7 @@ namespace PointerSurvival
                     if (item.Update(pointerBox))
                     {   
                         item.RunAbility(obstacles);
+                        speedTxt.Text = "" + PointerSurvivalController.Speed;
                         ToastShow(item.Text);
                         item.obj.Dispose();
                         this.Controls.Remove(item.obj);
@@ -195,11 +200,19 @@ namespace PointerSurvival
                                 if (m.cal.isBossClear)
                                 {
                                     ToastShow("Boss Level " + m.cal.Level + " Clear !");
+                                    if(obstacleTimer.Interval >= 500)
+                                    {
+                                        obstacleTimer.Interval -= 100;
+                                        PointerSurvivalController.TimeToCreateAsteroid = obstacleTimer.Interval;
+                                        LevelTxt.Text = "" + (m.cal.Level + 1);
+                                        asteroidSpawnTimeTxt.Text = "" + (PointerSurvivalController.TimeToCreateAsteroid/1000.00);
+                                    }
+                                        
                                 }
                                 if (m.cal.isBoss)
                                 {
                                     ToastShow("Boss Stage " + m.cal.Level + " !");
-                                    m.cal.isBoss = false; 
+                                    m.cal.isBoss = true; 
                                 }
                             }
 
@@ -397,6 +410,11 @@ namespace PointerSurvival
             toastLabel.Show();
             toastLabel.Text = Text;
             threesecondTimer.Start();
+        }
+
+        private void label5_Click_1(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -19,7 +19,7 @@ namespace PointerSurvival
 
         public const int OperatorType = -1;
 
-        public static int SafeDistance = 220;
+        public static int SafeDistance = 250;
 
         public PictureBox obj { get; set; }
         public Point Position { get; set; }
@@ -73,8 +73,9 @@ namespace PointerSurvival
         {
             CreateImageWith(GenerateNumberOrOperator(), RandomLocationWithSafeDistanceFrom(playerX, playerY), Calculation.random.Next(1, 4));
             RandomType();
-            goX = playerX > obj.Left;
-            goY = playerY > obj.Top;
+            goX = Convert.ToBoolean(Calculation.random.Next(0,1));
+            goY = Convert.ToBoolean(Calculation.random.Next(0,1));
+            RandomDirection();
             if (isBoss) BaseNumber = 2;
             else baseNumber = 10;
             Update();
@@ -290,36 +291,27 @@ namespace PointerSurvival
             return isHit();
         }
 
+        public void RandomDirection()
+        {
+            speedX = Calculation.random.Next(-3,3);
+            speedY = Calculation.random.Next(-3,3);
+        }
+
+        private int speedX;
+        private int speedY;
+
         public void Move()
         {
             if (isActive)
             {
-                //Check X coord
-                if (goX)
-                {
-                    obj.Left += speed;
-                }
-                else
-                {
-                    obj.Left -= speed;
-                }
-
-                //Check Y coord
-                if (goY)
-                {
-                    obj.Top += speed;
-                }
-                else
-                {
-                    obj.Top -= speed;
-                }
-
+                obj.Left += speed * speedX;
+                obj.Top += speed * speedY;
             }
         }
 
         public bool isOutOfBoundary()
         {
-            if (obj.Location.X < -300 || obj.Location.X > 1500 || obj.Location.Y < -300 || obj.Location.Y > 1100)
+            if (obj.Location.X < -300 || obj.Location.X > 1400 || obj.Location.Y < -300 || obj.Location.Y > 1100)
             {
                 isDurable = false;
                 isActive = false;
