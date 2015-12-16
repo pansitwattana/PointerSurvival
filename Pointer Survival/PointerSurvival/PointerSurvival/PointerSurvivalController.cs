@@ -28,8 +28,8 @@ namespace PointerSurvival
         public const int ItemSpawn = 11;
         public const int StageBoss = 12;
         public const int Reset = 13;
-
         public const int Fire2 = 14;
+        public const int ClearItem = 15;
 
         public override void ActionPerformed(int action)
         {
@@ -81,6 +81,9 @@ namespace PointerSurvival
                         break;
                     case Reset:
                         m.Reset();
+                        break;
+                    case ClearItem:
+                        m.ClearItem();
                         break;
                 }
             }

@@ -132,6 +132,11 @@ namespace PointerSurvival
             NotifyAll();
         }
 
+        public void ClearItem()
+        {
+            throw new NotImplementedException();
+        }
+
         public void BecomeBoss()
         {
             cal.isBoss = true;

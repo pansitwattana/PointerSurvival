@@ -12,19 +12,19 @@ namespace PointerSurvival
         public float x, y, vx, vy, radius;
         public Brush brush;
 
-        public Star( int gameWidth, int gameHeigth, Random r )
+        public Star(int gameWidth, int gameHeigth, Random r)
         {
             //var r = new Random();
-            
+
             x = r.Next(gameWidth);
             y = r.Next(gameHeigth);
 
-            vx = r.Next(2) + 2;
-            vy = r.Next(2) + 2;
+            vx = 1;
+            vy = 1;
 
             radius = r.Next(2) + 1;
 
-            brush = new SolidBrush(Color.FromArgb( r.Next(127)+127, r.Next(127)+127, r.Next(127)+127));
+            brush = new SolidBrush(Color.FromArgb(r.Next(127) + 127, r.Next(127) + 127, r.Next(127) + 127));
         }
         /*
         public Ball duplicate()
@@ -41,26 +41,27 @@ namespace PointerSurvival
             return b;
         }
         */
-        public void move( int gameWidth, int gameHeigth)
+        public void move(int gameWidth, int gameHeigth)
         {
-
             if (x - radius < 0 || x + radius > gameWidth)
             {
-                vx *= (-1); 
+                x = Calculation.random.Next(gameWidth);
+                y = Calculation.random.Next(gameHeigth);
             }
 
             if (y - radius < 0 || y + radius > gameHeigth)
             {
-                vy *= (-1);
+                x = Calculation.random.Next(gameWidth);
+                y = Calculation.random.Next(gameHeigth);
             }
 
-            x += vx;
-            y += vy;
+            this.x += vx;
+            this.y += vx;
         }
 
         public void Draw(Graphics g)
         {
-            g.FillEllipse(brush, new RectangleF( x - radius, y - radius, radius * 2, radius * 2));
+            g.FillEllipse(brush, new RectangleF(x - radius, y - radius, radius * 2, radius * 2));
         }
     }
 }

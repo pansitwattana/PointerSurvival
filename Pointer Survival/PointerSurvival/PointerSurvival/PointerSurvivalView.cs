@@ -27,14 +27,14 @@ namespace PointerSurvival
         public PointerSurvivalView()
         {
             InitializeComponent();
-
+            pointerBox = PointerBox;
             model = new PointerSurvivalModel();
             model.AttachObserver(this);
             controller = new PointerSurvivalController();
             controller.AddModel(model);
             PointerBox.Location = Player.PositionStart;
             //Cursor.Hide();
-            pointerBox = PointerBox;
+            
 
             LevelTxt.Text = "1";
             asteroidSpawnTimeTxt.Text = "" + PointerSurvivalController.TimeToCreateAsteroid/1000;
@@ -66,7 +66,6 @@ namespace PointerSurvival
             UpdateAsteroids(((PointerSurvivalModel)m).GetAsteroids());
             UpdateBullets(((PointerSurvivalModel)m).GetBullets(), ((PointerSurvivalModel)m).GetAsteroids(), (PointerSurvivalModel)m);
             UpdateItems(((PointerSurvivalModel)m).GetItems(), ((PointerSurvivalModel)m).GetAsteroids(), ((PointerSurvivalModel)m).GetCalcucaltion());
-
         }
 
         public void NotifyReset(Model m)
@@ -188,6 +187,12 @@ namespace PointerSurvival
                         break;
                     }
                 }
+            if(items.Count > 5)
+            {
+                this.Controls.Remove(items.ElementAt(items.Count - 1).obj);
+                items.ElementAt(items.Count - 1).obj.Dispose();
+                items.RemoveAt(items.Count - 1);
+            }
         }
 
         private void UpdateBullets(List<Weapon> bullets,List<Obstacle> obstacles, PointerSurvivalModel m)
@@ -290,7 +295,11 @@ namespace PointerSurvival
                     this.Controls.Remove(o.obj);
                 }
             }
-            
+
+            PointerSurvivalController.Speed = 4;
+            PointerSurvivalController.BulletSpeed = 10;
+            PointerSurvivalController.NextFireTime = 50;
+            PointerBox.Image = PointerSurvival.Properties.Resources.spaceup;
             PointerBox.Show();
             timer1.Start();
             obstacleTimer.Start();
@@ -486,6 +495,11 @@ namespace PointerSurvival
         }
 
         private void num2lbl_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void clearItemTimer_Tick(object sender, EventArgs e)
         {
 
         }

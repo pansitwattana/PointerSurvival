@@ -52,6 +52,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
+            this.clearItemTimer = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.PointerBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -297,6 +298,11 @@
             this.label7.TabIndex = 18;
             this.label7.Text = "Left / Right";
             // 
+            // clearItemTimer
+            // 
+            this.clearItemTimer.Interval = 60000;
+            this.clearItemTimer.Tick += new System.EventHandler(this.clearItemTimer_Tick);
+            // 
             // PointerSurvivalView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -366,6 +372,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Timer clearItemTimer;
     }
 }
 

@@ -15,6 +15,9 @@ namespace PointerSurvival
         public const int ChangeBaseNumberItem = 1;
         public const int SpeedAsteroidItem = 2;
         public const int AnswerAsteroidItem = 3;
+        public const int BulletSpeedItem = 4;
+        public const int FireRateItem = 5;
+
         public static int ItemSize = 30;
 
         public string Text { get; set; }
@@ -33,7 +36,7 @@ namespace PointerSurvival
 
         public void RandomType()
         {
-            ItemType = Calculation.random.Next(4);
+            ItemType = Calculation.random.Next(6);
             switch (ItemType)
             {
                 case SpeedRandomItem:
@@ -48,7 +51,12 @@ namespace PointerSurvival
                 case AnswerAsteroidItem:
                     Name = "ShowAnswer";
                     break;
-
+                case BulletSpeedItem:
+                    Name = "Bullet";
+                    break;
+                case FireRateItem:
+                    Name = "FireRate";
+                    break;
             }
         }
 
@@ -168,7 +176,20 @@ namespace PointerSurvival
                     break; 
             }
 
-            Text = "Change Asteroid Number To " + symbol + " !";
+            Text = "Changed Asteroids Number To " + symbol + " !";
+        }
+
+        public void RunBulletSpeedItem()
+        {
+            PointerSurvivalController.BulletSpeed++;
+            Text = "Bullet Speed Faster !";
+        }
+
+        public void RunFireRateItem()
+        {
+            if(PointerSurvivalController.NextFireTime >  20)
+                PointerSurvivalController.NextFireTime -= 3;
+            Text = "Fire Rate Increased !";
         }
 
         public void RunAbility(List<Obstacle> obstacles, Calculation cal, int answer)
@@ -186,6 +207,12 @@ namespace PointerSurvival
                     break;
                 case AnswerAsteroidItem:
                     RunAnswerAsteroidItem(obstacles, cal, answer);
+                    break;
+                case BulletSpeedItem:
+                    RunBulletSpeedItem();
+                    break;
+                case FireRateItem:
+                    RunFireRateItem();
                     break;
             }
             obj.Dispose();

@@ -110,7 +110,7 @@ namespace PointerSurvival
                 symbolLocation = new Point(20, 20);
             }
 
-            g.DrawString(symbol, new Font("Consolas", symbolsize), brush, symbolLocation);
+            g.DrawString(symbol, new Font("Arial Rounded MT Bold", symbolsize), brush, symbolLocation);
 
             g.Flush();
 
