@@ -54,10 +54,9 @@ namespace PointerSurvival
             UpdatePointerX(((PointerSurvivalModel)m).GetDistanceX());
             UpdatePointerY(((PointerSurvivalModel)m).GetDistanceY());
             UpdateAsteroids(((PointerSurvivalModel)m).GetAsteroids());
-            UpdateBoss(((PointerSurvivalModel)m).GetScore(), ((PointerSurvivalModel)m).GetLevel());
             UpdateBullets(((PointerSurvivalModel)m).GetBullets(), ((PointerSurvivalModel)m).GetAsteroids(), (PointerSurvivalModel)m);
             UpdateItems(((PointerSurvivalModel)m).GetItems(), ((PointerSurvivalModel)m).GetAsteroids());
-            UpdateScore(((PointerSurvivalModel)m).GetScore());
+
         }
 
         
@@ -101,16 +100,6 @@ namespace PointerSurvival
         private void UpdatePointerY(int distanceY)
         {
             PointerBox.Top = distanceY;
-        }
-
-        private void UpdateScore(int score)
-        {
-            
-        }
-
-        private void UpdateBoss(int score, int level)
-        {
-
         }
 
         private void UpdateAsteroids(List<Obstacle> obstacles)
@@ -200,7 +189,7 @@ namespace PointerSurvival
                                 if (m.cal.isBossClear)
                                 {
                                     ToastShow("Boss Level " + m.cal.Level + " Clear !");
-                                    if(obstacleTimer.Interval >= 500)
+                                    if(obstacleTimer.Interval > 100)
                                     {
                                         obstacleTimer.Interval -= 100;
                                         PointerSurvivalController.TimeToCreateAsteroid = obstacleTimer.Interval;

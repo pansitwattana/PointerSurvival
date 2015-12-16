@@ -296,6 +296,11 @@ namespace PointerSurvival
         {
             speedX = Calculation.random.Next(-3,3);
             speedY = Calculation.random.Next(-3,3);
+            while (speedX == 0 && speedY == 0)
+            {
+                speedX = Calculation.random.Next(-3, 3);
+                speedY = Calculation.random.Next(-3, 3);
+            }
         }
 
         private int speedX;

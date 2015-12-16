@@ -156,7 +156,7 @@ namespace PointerSurvival
                 isBossClear = true;
                 isBoss = false;
             }
-            else
+            else if (isBossClear)
             {
                 isBossClear = false;
                 isBoss = false;

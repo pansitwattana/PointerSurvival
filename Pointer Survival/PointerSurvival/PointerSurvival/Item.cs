@@ -13,7 +13,8 @@ namespace PointerSurvival
     {
         public const int SpeedRandomItem = 0;
         public const int ChangeBaseNumberItem = 1;
-        
+        public const int SpeedAsteroidItem = 2;
+
         public static int ItemSize = 30;
 
         public string Text { get; set; }
@@ -32,7 +33,7 @@ namespace PointerSurvival
 
         public void RandomType()
         {
-            ItemType = Calculation.random.Next(2);
+            ItemType = Calculation.random.Next(3);
             switch (ItemType)
             {
                 case SpeedRandomItem:
@@ -41,7 +42,10 @@ namespace PointerSurvival
                 case ChangeBaseNumberItem:
                     Name = "Base2";
                     break;
-                
+                case SpeedAsteroidItem:
+                    Name = "AsteroidSpeed";
+                    break;
+
             }
         }
 
@@ -86,35 +90,75 @@ namespace PointerSurvival
             return false;
         }
 
+        public void RunSpeedItem()
+        {
+            PointerSurvivalController.Speed = Calculation.random.Next(3, 7);
+            switch (PointerSurvivalController.Speed)
+            {
+                case 3:
+                    Text = "Speed changed to Turtle !";
+                    break;
+                case 4:
+                    Text = "Speed changed to Low !";
+                    break;
+                case 5:
+                    Text = "Speed changed to Normal !";
+                    break;
+                case 6:
+                    Text = "Speed changed to Fast !";
+                    break;
+                case 7:
+                    Text = "Speed changed to the Fastest";
+                    break;
+            }
+        }
+
+        public void RunChangeBaseNumberItem(List<Obstacle> obstacles)
+        {
+            foreach (Obstacle o in obstacles)
+                o.BaseNumber = 2;
+            Text = "Number changed to Base 2";
+        }
+
+        public void RunSpeedAsteroidItem(List<Obstacle> obstacles)
+        {
+            int speed = Calculation.random.Next(-1, 1);
+            while (speed == 0)
+            {
+                speed = Calculation.random.Next(-1, 1);
+            }
+            foreach (Obstacle o in obstacles)
+            {
+                if (o.Speed > 1 || speed >= 0)
+                    o.Speed += speed;
+            }
+
+            switch (speed)
+            {
+                case 1:
+                    Text = "Asteroid Speed Increased !";
+                    break;
+                case -1:
+                    Text = "Asteroid Speed Decreased !";
+                    break;
+                default:
+                    Text = "Error";
+                    break;
+            }
+        }
+
         public void RunAbility(List<Obstacle> obstacles)
         {
             switch (ItemType)
             {
                 case SpeedRandomItem:
-                    PointerSurvivalController.Speed = Calculation.random.Next(3, 7);
-                    switch (PointerSurvivalController.Speed)
-                    {
-                        case 3:
-                            Text = "Speed changed to Turtle !";
-                            break;
-                        case 4:
-                            Text = "Speed changed to Low !";
-                            break;
-                        case 5:
-                            Text = "Speed changed to Normal !";
-                            break;
-                        case 6:
-                            Text = "Speed changed to Fast !";
-                            break;
-                        case 7:
-                            Text = "Speed changed to the Fastest";
-                            break;
-                    }
+                    RunSpeedItem();
                     break;
                 case ChangeBaseNumberItem:
-                    foreach (Obstacle o in obstacles)
-                        o.BaseNumber = 2;
-                    Text = "Number changed to Base 2";
+                    RunChangeBaseNumberItem(obstacles);
+                    break;
+                case SpeedAsteroidItem:
+                    RunSpeedAsteroidItem(obstacles);
                     break;
             }
             obj.Dispose();
