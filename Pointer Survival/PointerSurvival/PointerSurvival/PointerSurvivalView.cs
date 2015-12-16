@@ -22,7 +22,7 @@ namespace PointerSurvival
         private bool m_right = false;
         private bool m_left = false;
 
-        
+        List<Obstacle> balls = new List<Obstacle>();
 
         public PointerSurvivalView()
         {
@@ -96,6 +96,7 @@ namespace PointerSurvival
 
         private void UpdateNewAsteroid(Obstacle p)
         {
+            balls.Add(new Obstacle(Calculation.random.Next(1000),Calculation.random.Next(700),false));
             this.Controls.Add(p.obj);
         }
 
@@ -112,6 +113,10 @@ namespace PointerSurvival
 
         private void UpdateAsteroids(List<Obstacle> obstacles)
         {
+            foreach(Obstacle ball in balls)
+            {
+                ball.Update();
+            }
             if (obstacles.Count > 0)
                 foreach (Obstacle o in obstacles)
                 {
@@ -141,6 +146,7 @@ namespace PointerSurvival
                         o.Destroy();
                         this.Controls.Remove(o.obj);
                     }
+                    
                     //if (!this.ClientRectangle.IntersectsWith(o.obj.Bounds))
                     //{
                     //    if ( == -1)
@@ -156,6 +162,7 @@ namespace PointerSurvival
                     //        if (o.isHit(o2))
                     //        {
                     //            o.Bounce(o2);
+                    //            break;
                     //        }
                     //    }
                     //}
@@ -407,7 +414,16 @@ namespace PointerSurvival
 
         private void PointerSurvivalView_Paint(object sender, PaintEventArgs e)
         {
+            Graphics g = e.Graphics;
 
+            /*foreach (var ball in balls)
+            {
+                ball.Draw(g);
+            }*/
+            for (int i = 0; i < balls.Count; i++)
+                {
+                    balls[i].Draw(g);
+                }
         }
 
         private void PointerSurvivalView_MouseDown(object sender, MouseEventArgs e)

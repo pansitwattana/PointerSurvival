@@ -66,6 +66,10 @@ namespace PointerSurvival
 
         public Obstacle(int playerX, int playerY, bool isBoss)
         {
+            radius = Calculation.random.Next(2) + 1;
+            brush = new SolidBrush(Color.FromArgb(Calculation.random.Next(127) + 127, Calculation.random.Next(127) + 127, Calculation.random.Next(127) + 127));
+            x = playerX;
+            y = playerY;
             CreateObstacle(playerX, playerY, isBoss);
         }
 
@@ -73,14 +77,17 @@ namespace PointerSurvival
         {
             CreateImageWith(GenerateNumberOrOperator(), RandomLocationWithSafeDistanceFrom(playerX, playerY), Calculation.random.Next(1, 4));
             RandomType();
-            goX = Convert.ToBoolean(Calculation.random.Next(0,1));
-            goY = Convert.ToBoolean(Calculation.random.Next(0,1));
             RandomDirection();
             if (isBoss) BaseNumber = 2;
             else baseNumber = 10;
             Update();
         }
-
+        public Brush brush;
+        public float x, y,  radius;
+        public void Draw(Graphics g)
+        {
+            g.FillEllipse(brush, new RectangleF(x - radius, y - radius, radius * 2, radius * 2));
+        }
         private void CreateImageWith(string symbol, Point point, int speed)
         {
             if (obj == null)
@@ -299,9 +306,6 @@ namespace PointerSurvival
             return symbol;
         }
 
-        private bool goX;
-        private bool goY;
-
         public void SetNumberTo(int n)
         {
             CreateImageWith(GenerateNumberOrOperator(n), obj.Location, Speed);
@@ -335,12 +339,38 @@ namespace PointerSurvival
 
         public void RandomDirection()
         {
-            speedX = Calculation.random.Next(-3,3);
-            speedY = Calculation.random.Next(-3,3);
-            while (speedX == 0 && speedY == 0)
+            if(obj.Location.X < 300)
             {
-                speedX = Calculation.random.Next(-3, 3);
-                speedY = Calculation.random.Next(-3, 3);
+                speedX = Calculation.random.Next(1,4);
+            }
+            else if(obj.Location.X > 900)
+            {
+                speedX = Calculation.random.Next(-3,0);
+            }
+            else
+            {
+                speedX = Calculation.random.Next(-3, 4);
+                while (speedX == 0)
+                {
+                    speedX = Calculation.random.Next(-3, 4);
+                }
+            }
+
+            if(obj.Location.Y < 150)
+            {
+                speedY = Calculation.random.Next(1, 4);
+            }
+            else if (obj.Location.Y > 450)
+            {
+                speedY = Calculation.random.Next(-3, 0);
+            }
+            else
+            {
+                speedY = Calculation.random.Next(-3, 4);
+                while (speedY == 0)
+                {
+                    speedY = Calculation.random.Next(-3, 4);
+                }
             }
         }
 
@@ -353,6 +383,8 @@ namespace PointerSurvival
             {
                 obj.Left += speed * speedX;
                 obj.Top += speed * speedY;
+                x += speed * speedX;
+                y += speed * speedY;
             }
         }
 
@@ -370,26 +402,27 @@ namespace PointerSurvival
         {
             //if (isHit(o))
             //{
-            //    if(goX != o.goX)
-            //    {
-            //        this.goX = !goX;
-            //        o.goX = !o.goX;
-            //    }
-            //    if(goY != o.goY)
-            //    {
-            //        this.goY = !goY;
-            //        o.goY = !o.goY;
-            //    }
+            //    speedX = o.speedX;
+
+            //    speedY = o.speedY;
+
+            //    o.speedX = speedX;
+
+            //    o.speedY = speedY;
+
+            //    obj.Left += speed * speedX;
+
+            //    obj.Top += speed * speedY;
+
+            //    o.obj.Left += 100 * o.speedX;
+
+            //    o.obj.Top += 100 * o.speedY;
             //}
         }
 
         public void Destroy()
         {
-            //PictureBox bomb = new PictureBox();
-            //bomb.Size = new Size(Size, Size);
-            //bomb.Location = obj.Location;
-            //bomb.Image = PointerSurvival.Properties.Resources.explosion1;
-            //bomb.BackColor = Color.Transparent;
+            
 
             if (!isDurable)
             {
