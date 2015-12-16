@@ -173,7 +173,7 @@ namespace PointerSurvival
 
         public void RunAbility(List<Obstacle> obstacles, Calculation cal, int answer)
         {
-            switch (AnswerAsteroidItem)//ItemType)
+            switch (ItemType)
             {
                 case SpeedRandomItem:
                     RunSpeedItem();
