@@ -42,7 +42,7 @@ namespace PointerSurvival
         {
             PictureBox mainSprite = new PictureBox();
             mainSprite.Size = new Size(10, 10);
-            mainSprite.Location = new Point(x, y);
+            mainSprite.Location = new Point(x+15, y+15);
 
             if(Type == Right)
                 mainSprite.BackColor = Color.Red;

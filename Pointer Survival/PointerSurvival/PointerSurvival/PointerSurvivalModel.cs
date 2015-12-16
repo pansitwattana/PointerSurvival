@@ -27,7 +27,6 @@ namespace PointerSurvival
         List<Item> items = new List<Item>();
         List<Weapon> bullets = new List<Weapon>();
         public Calculation cal = new Calculation();
-        private bool isBoss = false;
 
         public PointerSurvivalModel()
         {
@@ -130,12 +129,7 @@ namespace PointerSurvival
 
         public void BecomeBoss()
         {
-            isBoss = true;
-        }
-
-        public void BecomeNormal()
-        {
-            isBoss = false;
+            cal.isBoss = true;
         }
 
         public void Fire1()
@@ -186,7 +180,7 @@ namespace PointerSurvival
 
         public void CreaeAsteroid()
         {
-            obstacles.Add(new Obstacle(player.Position.X,player.Position.Y,isBoss));
+            obstacles.Add(new Obstacle(player.Position.X,player.Position.Y,cal.isBoss));
             NotifyAsteroid();
         }
 
@@ -221,6 +215,11 @@ namespace PointerSurvival
         public int GetScore()
         {
             return cal.getScore;
+        }
+
+        public int GetLevel()
+        {
+            return cal.Level;
         }
 
         public bool isHit()

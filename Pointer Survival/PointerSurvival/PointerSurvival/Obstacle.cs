@@ -111,7 +111,7 @@ namespace PointerSurvival
                 symbolLocation = new Point(20, 20);
             }
 
-            g.DrawString(symbol, new Font("Tahoma", symbolsize), brush, symbolLocation);
+            g.DrawString(symbol, new Font("Consolas", symbolsize), brush, symbolLocation);
 
             g.Flush();
 
@@ -220,30 +220,9 @@ namespace PointerSurvival
         {
             Number = Calculation.random.Next(1, 10);
 
-            string symbol;
-            if (Number > 0)
-            {
-                symbol = Number.ToString();
-            }
-            else
-            {
-                if (Number == Calculation.Plus)
-                {
-                    symbol = "+";
-                }
-                else if (Number == Calculation.Minus)
-                {
-                    symbol = "-";
-                }
-                else if (Number == Calculation.Multiply)
-                {
-                    symbol = "*";
-                }
-                else
-                {
-                    symbol = "Error";
-                }
-            }
+            string symbol;         
+            symbol = Number.ToString();
+            
             return symbol;
         }
         private string GenerateNumberOrOperator()
@@ -272,7 +251,7 @@ namespace PointerSurvival
                 }
                 else if (Number == Calculation.Multiply)
                 {
-                    symbol = "*";
+                    symbol = "x";
                 }
                 else
                 {

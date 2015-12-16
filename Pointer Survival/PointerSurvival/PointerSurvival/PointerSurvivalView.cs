@@ -50,9 +50,10 @@ namespace PointerSurvival
             UpdatePointerX(((PointerSurvivalModel)m).GetDistanceX());
             UpdatePointerY(((PointerSurvivalModel)m).GetDistanceY());
             UpdateAsteroids(((PointerSurvivalModel)m).GetAsteroids());
+            UpdateBoss(((PointerSurvivalModel)m).GetScore(), ((PointerSurvivalModel)m).GetLevel());
             UpdateBullets(((PointerSurvivalModel)m).GetBullets(), ((PointerSurvivalModel)m).GetAsteroids(), (PointerSurvivalModel)m);
             UpdateItems(((PointerSurvivalModel)m).GetItems(), ((PointerSurvivalModel)m).GetAsteroids());
-            UpdateBoss(((PointerSurvivalModel)m).GetScore());
+            UpdateScore(((PointerSurvivalModel)m).GetScore());
         }
 
         
@@ -98,17 +99,14 @@ namespace PointerSurvival
             PointerBox.Top = distanceY;
         }
 
-        private void UpdateBoss(int score)
+        private void UpdateScore(int score)
         {
-            if((score % PointerSurvivalController.EveryXScoreForBoss) == 0 && score > 0)
-            {
-                ToastShow("Boss Stage !");
-                controller.ActionPerformed(PointerSurvivalController.StageBoss);
-            }
-            else
-            {
-                controller.ActionPerformed(PointerSurvivalController.StageNormal);
-            }
+            
+        }
+
+        private void UpdateBoss(int score, int level)
+        {
+
         }
 
         private void UpdateAsteroids(List<Obstacle> obstacles)
@@ -168,6 +166,7 @@ namespace PointerSurvival
 
         private void UpdateBullets(List<Weapon> bullets,List<Obstacle> obstacles, PointerSurvivalModel m)
         {
+
             if (bullets.Count > 0)
             {
                 bool isHit = false;
@@ -193,6 +192,15 @@ namespace PointerSurvival
                             if (m.cal.checkans(int.Parse(answerlbl.Text)))
                             {
                                 answerlbl.Text = "" + Calculation.random.Next(1,20);
+                                if (m.cal.isBossClear)
+                                {
+                                    ToastShow("Boss Level " + m.cal.Level + " Clear !");
+                                }
+                                if (m.cal.isBoss)
+                                {
+                                    ToastShow("Boss Stage " + m.cal.Level + " !");
+                                    m.cal.isBoss = false; 
+                                }
                             }
 
                             num1lbl.Text = "" + m.cal.getNum1;
@@ -237,38 +245,25 @@ namespace PointerSurvival
                 controller.ActionPerformed(PointerSurvivalController.Fire1);
             }
 
-            if (e.KeyCode == Keys.W && e.Modifiers == Keys.D)
+          
+            if (e.KeyCode == Keys.W)
             {
-                Console.WriteLine("W D pressed");
-                controller.ActionPerformed(PointerSurvivalController.UpRight);
-            }
-            else if (e.KeyCode == Keys.W && e.Modifiers == Keys.A)
-            {
-                Console.WriteLine("W A pressed");
-                controller.ActionPerformed(PointerSurvivalController.UpLeft);
-            }
-            else if (e.KeyCode == Keys.S && e.Modifiers == Keys.D)
-            {
-                controller.ActionPerformed(PointerSurvivalController.DownRight);
-            }
-            else if (e.KeyCode == Keys.S && e.Modifiers == Keys.A)
-            {
-                controller.ActionPerformed(PointerSurvivalController.DownLeft);
-            }
-            else if (e.KeyCode == Keys.W)
-            {
+                pointerBox.Image = PointerSurvival.Properties.Resources.pointer;
                 controller.ActionPerformed(PointerSurvivalController.Up);
             }
             else if (e.KeyCode == Keys.S)
             {
+                pointerBox.Image = PointerSurvival.Properties.Resources.pointerD;
                 controller.ActionPerformed(PointerSurvivalController.Down);
             }
             else if (e.KeyCode == Keys.A)
             {
+                pointerBox.Image = PointerSurvival.Properties.Resources.pointerL;
                 controller.ActionPerformed(PointerSurvivalController.Left);
             }
             else if (e.KeyCode == Keys.D)
             {
+                pointerBox.Image = PointerSurvival.Properties.Resources.pointerR;
                 controller.ActionPerformed(PointerSurvivalController.Right);
             }
 
@@ -398,6 +393,7 @@ namespace PointerSurvival
 
         private void ToastShow(string Text)
         {
+            toastLabel.ForeColor = Color.FromArgb(0, 0, 0);
             toastLabel.Show();
             toastLabel.Text = Text;
             threesecondTimer.Start();

@@ -8,6 +8,8 @@ namespace PointerSurvival
 {
     class Calculation
     {
+        public static int EveryXScoreForBoss = 4;
+
 
         public static Random random = new Random();
 
@@ -31,6 +33,10 @@ namespace PointerSurvival
             num2 = 0;
             opnum = 0;
         }
+
+        public int Level { get; set; } = 0;
+
+        public bool isBoss { get; set; } = false;
 
         private int answer=10;
 
@@ -80,10 +86,13 @@ namespace PointerSurvival
             set { score = value; }
         }
 
+        public bool isBossClear { get; set; } = false;
+
 
         public bool checkans(int ans)
         {
             string operatorString;
+            bool isCorrect = false;
             //int i = 1;
             switch (operatorsign)
             {
@@ -97,7 +106,7 @@ namespace PointerSurvival
                     //op = operatorsign;
                     if (ans == answer) {
                         score++;
-                        return true;
+                        isCorrect = true;
                     } 
                     break;
                 case 2:
@@ -108,7 +117,7 @@ namespace PointerSurvival
                     if (ans == answer)
                     {
                         score++;
-                        return true;
+                        isCorrect = true;
                     }
                     break;
                 case 3:
@@ -119,7 +128,7 @@ namespace PointerSurvival
                     if (ans == answer)
                     {
                         score++;
-                        return true;
+                        isCorrect = true;
                     }
                     break;
                 case 4:
@@ -131,12 +140,29 @@ namespace PointerSurvival
                     if (ans == answer)
                     {
                         score++;
-                        return true;
+                        isCorrect = true;
                     }
                     break; 
 
             }
-            return false;
+
+            if ((score % EveryXScoreForBoss) == 0 && score > 0 && isCorrect)
+            {
+                Level++;
+                isBoss = true;
+            }
+            else if ((score % EveryXScoreForBoss) == 1 && score > 1 && isCorrect)
+            {
+                isBossClear = true;
+                isBoss = false;
+            }
+            else
+            {
+                isBossClear = false;
+                isBoss = false;
+            }
+
+            return isCorrect;
         }
 
 
