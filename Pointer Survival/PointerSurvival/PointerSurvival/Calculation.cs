@@ -104,7 +104,7 @@ namespace PointerSurvival
                     operatorString = "+";
                     symbol = operatorString;
                     //op = operatorsign;
-                    if (ans == answer) {
+                    if (ans == answer || true) {
                         score++;
                         isCorrect = true;
                     } 
@@ -156,7 +156,7 @@ namespace PointerSurvival
                 isBossClear = true;
                 isBoss = false;
             }
-            else
+            else if (isBossClear)
             {
                 isBossClear = false;
                 isBoss = false;

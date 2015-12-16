@@ -200,8 +200,8 @@ namespace PointerSurvival
                                 if (m.cal.isBossClear)
                                 {
                                     ToastShow("Boss Level " + m.cal.Level + " Clear !");
-                                    if(obstacleTimer.Interval >= 500)
-                                    {
+                                    if(obstacleTimer.Interval >= 100)
+                                    { 
                                         obstacleTimer.Interval -= 100;
                                         PointerSurvivalController.TimeToCreateAsteroid = obstacleTimer.Interval;
                                         LevelTxt.Text = "" + (m.cal.Level + 1);
