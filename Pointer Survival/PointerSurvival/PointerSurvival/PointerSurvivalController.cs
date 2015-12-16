@@ -12,7 +12,7 @@ namespace PointerSurvival
         public static int Speed = 4;
         public static int TimeToCreateAsteroid = 1000;
         public static int BulletSpeed = 10;
-
+        public static int NextFireTime = 50;
 
         public const int TimeTick = 0;
         public const int Fire1 = 1;

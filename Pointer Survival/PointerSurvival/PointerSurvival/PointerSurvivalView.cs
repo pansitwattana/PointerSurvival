@@ -22,6 +22,8 @@ namespace PointerSurvival
         private bool m_right = false;
         private bool m_left = false;
 
+        
+
         public PointerSurvivalView()
         {
             InitializeComponent();
@@ -47,6 +49,9 @@ namespace PointerSurvival
             itemTimer.Interval = 10000;
             itemTimer.Enabled = true;
 
+            fireTimer.Enabled = true;
+            fireCount = 0;
+            fireTime = 0;
         }
 
         public void Notify(Model m)
@@ -269,27 +274,37 @@ namespace PointerSurvival
                 controller.ActionPerformed(PointerSurvivalController.Right);
             }
 
-            if (e.KeyCode == Keys.Left)
+            if (fireCount >= fireTime)
             {
-                m_left = true;
-                controller.ActionPerformed(PointerSurvivalController.Fire1);
-            }
-            if (e.KeyCode == Keys.Right)
-            {
-                m_right = true;
-                controller.ActionPerformed(PointerSurvivalController.Fire2);
-            }
+                
+                
+                if (e.KeyCode == Keys.Left)
+                {
+                    fireTime = fireCount + PointerSurvivalController.NextFireTime;
+                    m_left = true;
+                    controller.ActionPerformed(PointerSurvivalController.Fire1);
+                }
+                if (e.KeyCode == Keys.Right)
+                {
+                    fireTime = fireCount + 20;
+                    m_right = true;
+                    controller.ActionPerformed(PointerSurvivalController.Fire2);
+                }
 
-            if (m_left == false || m_right == false) return;
+                if (m_left == false || m_right == false) return;
+            }
         }
-
-
+        private int fireCount = 0;
+        private int fireTime = 0;
         private void PointerSurvivalView_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Left)
-                m_left = false;
-            if (e.KeyCode == Keys.Right)
-                m_right = false;
+
+                
+                if (e.KeyCode == Keys.Left)
+                    m_left = false;
+                if (e.KeyCode == Keys.Right)
+                    m_right = false;
+            
         }
 
         private void Form1_MouseMove(object sender, MouseEventArgs e)
@@ -339,31 +354,12 @@ namespace PointerSurvival
 
         private void PointerSurvivalView_MouseDown(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
-            {
-                m_left = true;
-                controller.ActionPerformed(PointerSurvivalController.Fire1);
-                Console.WriteLine("Left Clicked");
-            }
-            if (e.Button == MouseButtons.Right)
-            {
-                m_right = true;
-                controller.ActionPerformed(PointerSurvivalController.Fire2);
-                Console.WriteLine("Right Clicked");
-            }
-
-            if (m_left == false || m_right == false) return;
-
-           
-
+          
         }
 
         private void PointerSurvivalView_MouseUp(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
-                m_left = false;
-            if (e.Button == MouseButtons.Right)
-                m_right = false;
+
         }
 
         private void itemTimer_Tick(object sender, EventArgs e)
@@ -404,6 +400,12 @@ namespace PointerSurvival
         private void label5_Click_1(object sender, EventArgs e)
         {
 
+        }
+
+        private void fireTimer_Tick(object sender, EventArgs e)
+        {
+            Console.WriteLine("timer "+fireCount);
+            fireCount++;
         }
     }
 }

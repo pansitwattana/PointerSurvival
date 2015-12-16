@@ -122,10 +122,10 @@ namespace PointerSurvival
 
         public void RunSpeedAsteroidItem(List<Obstacle> obstacles)
         {
-            int speed = Calculation.random.Next(-1, 1);
+            int speed = Calculation.random.Next(-1, 2);
             while (speed == 0)
             {
-                speed = Calculation.random.Next(-1, 1);
+                speed = Calculation.random.Next(-1, 2);
             }
             foreach (Obstacle o in obstacles)
             {
