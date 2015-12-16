@@ -46,7 +46,7 @@ namespace PointerSurvival
             timer1.Interval = 30;
             timer1.Enabled = true;
 
-            itemTimer.Interval = 1000;
+            itemTimer.Interval = 10000;
             itemTimer.Enabled = true;
 
             fireTimer.Enabled = true;
