@@ -48,6 +48,7 @@
             this.asteroidSpawnTimeTxt = new System.Windows.Forms.Label();
             this.LevelTxt = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.tutorialTime = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.PointerBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -220,6 +221,11 @@
             this.label5.Text = "Level";
             this.label5.Click += new System.EventHandler(this.label5_Click_1);
             // 
+            // tutorialTime
+            // 
+            this.tutorialTime.Interval = 5000;
+            this.tutorialTime.Tick += new System.EventHandler(this.tutorialTime_Tick);
+            // 
             // PointerSurvivalView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -282,6 +288,7 @@
         private System.Windows.Forms.Label asteroidSpawnTimeTxt;
         private System.Windows.Forms.Label LevelTxt;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Timer tutorialTime;
     }
 }
 

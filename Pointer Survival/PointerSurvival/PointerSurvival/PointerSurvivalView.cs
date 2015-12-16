@@ -19,12 +19,19 @@ namespace PointerSurvival
         Controller controller;
         public static PictureBox pointerBox;
 
+        public static bool isTutorial;
+
         private bool m_right = false;
         private bool m_left = false;
 
         public PointerSurvivalView()
         {
             InitializeComponent();
+
+            isTutorial = true;
+            toastLabel.Show();
+            toastLabel.Text = "W A S D to Move the ship";
+            tutorialTime.Start();
 
             model = new PointerSurvivalModel();
             model.AttachObserver(this);
@@ -34,7 +41,7 @@ namespace PointerSurvival
             //Cursor.Hide();
             pointerBox = PointerBox;
 
-            LevelTxt.Text = "1";
+            LevelTxt.Text = "Tutorial";
             asteroidSpawnTimeTxt.Text = "" + PointerSurvivalController.TimeToCreateAsteroid/1000;
             speedTxt.Text = "" + PointerSurvivalController.Speed;
 
@@ -196,6 +203,13 @@ namespace PointerSurvival
 
                             if (m.cal.checkans(int.Parse(answerlbl.Text)))
                             {
+                                if (isTutorial)
+                                {
+                                    ToastShow("Game Start !!");
+                                    tutorialTime.Stop();
+                                    isTutorial = false;
+                                }
+                                
                                 answerlbl.Text = "" + Calculation.random.Next(1,20);
                                 if (m.cal.isBossClear)
                                 {
@@ -204,7 +218,7 @@ namespace PointerSurvival
                                     { 
                                         obstacleTimer.Interval -= 100;
                                         PointerSurvivalController.TimeToCreateAsteroid = obstacleTimer.Interval;
-                                        LevelTxt.Text = "" + (m.cal.Level + 1);
+                                        LevelTxt.Text = "" + (m.cal.Level);
                                         asteroidSpawnTimeTxt.Text = "" + (PointerSurvivalController.TimeToCreateAsteroid/1000.00);
                                     }
                                         
@@ -415,6 +429,22 @@ namespace PointerSurvival
         private void label5_Click_1(object sender, EventArgs e)
         {
 
+        }
+
+        private int count = 0;
+        private void tutorialTime_Tick(object sender, EventArgs e)
+        {
+            if(count == 0)
+            {
+                toastLabel.Text = ("Press Left Or Right Key To Store Value ");
+                count++;
+            }
+                
+            else
+            {
+                toastLabel.Text = ("Left ArrowKey Store Left Number \nRight Arrow Key Store Right Number \nOperator can be stored with Left or Right Arrow Key");
+            }
+            
         }
     }
 }

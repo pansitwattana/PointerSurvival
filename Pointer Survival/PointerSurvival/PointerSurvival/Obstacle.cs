@@ -229,35 +229,56 @@ namespace PointerSurvival
         }
         private string GenerateNumberOrOperator()
         {
-            Number = Calculation.random.Next(14) - 3;
-
-            while (Number == 0)
+            string symbol;
+            if (!PointerSurvivalView.isTutorial)
             {
                 Number = Calculation.random.Next(14) - 3;
-            }
 
-            string symbol;
-            if (Number > 0)
-            {
-                symbol = Number.ToString();
-            }
-            else
-            {
-                if (Number == Calculation.Plus)
+                while (Number == 0)
                 {
-                    symbol = "+";
+                    Number = Calculation.random.Next(14) - 3;
                 }
-                else if (Number == Calculation.Minus)
+
+                
+                if (Number > 0)
                 {
-                    symbol = "-";
-                }
-                else if (Number == Calculation.Multiply)
-                {
-                    symbol = "x";
+                    symbol = Number.ToString();
                 }
                 else
                 {
-                    symbol = "Error";
+                    if (Number == Calculation.Plus)
+                    {
+                        symbol = "+";
+                    }
+                    else if (Number == Calculation.Minus)
+                    {
+                        symbol = "-";
+                    }
+                    else if (Number == Calculation.Multiply)
+                    {
+                        symbol = "x";
+                    }
+                    else
+                    {
+                        symbol = "Error";
+                    }
+                }
+            }
+            else
+            {
+                switch(Calculation.random.Next(1, 4)){
+                    case 1:
+                        Number = 2;
+                        symbol = "2";
+                        break;
+                    case 2:
+                        Number = 8;
+                        symbol = "8";
+                        break;
+                    default:
+                        Number = Calculation.Plus;
+                        symbol = "+";
+                        break;
                 }
             }
             return symbol;
