@@ -174,6 +174,7 @@ namespace PointerSurvival
 
             if (Calculation.random.Next(100) < PercentBornChanable)
             {
+                speed = 1;
                 isChangable = true;
             }
             else
