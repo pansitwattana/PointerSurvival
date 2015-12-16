@@ -21,9 +21,13 @@ namespace PointerSurvival
         public static int DirectionDownLeft = 7;
         public static int DirectionDownRight = 8;
 
+
+
         private int playerDirection;
 
+        Obstacle bossObstacle = new Obstacle(0,0,Obstacle.BossType);
         List<Obstacle> obstacles = new List<Obstacle>();
+        List<Obstacle> obstaclesWhenBoss = new List<Obstacle>();
         List<Item> items = new List<Item>();
         List<Weapon> bullets = new List<Weapon>();
         public Calculation cal = new Calculation();
@@ -135,6 +139,7 @@ namespace PointerSurvival
         public void BecomeBoss()
         {
             cal.isBoss = true;
+
         }
 
         public void Reset()
@@ -190,7 +195,24 @@ namespace PointerSurvival
 
         public void CreaeAsteroid()
         {
-            obstacles.Add(new Obstacle(player.Position.X,player.Position.Y,cal.isBoss));
+            int type;
+            if (cal.isBoss)
+            {
+                type = Obstacle.Base2Type;
+                foreach (Obstacle o in obstacles)
+                {
+                    if(o.Type != Obstacle.BossType)
+                    {
+                        type = Obstacle.BossType;
+                    }
+                }
+                obstaclesWhenBoss.Add(new Obstacle(player.Position.X, player.Position.Y, Obstacle.BossBullet));
+            }
+            else
+            {
+                type = Obstacle.NormalType;
+            }
+            obstacles.Add(new Obstacle(player.Position.X,player.Position.Y, type));
             NotifyAsteroid();
         }
 
@@ -210,6 +232,18 @@ namespace PointerSurvival
         {
             //obstacle.Destroy();
             obstacles.Remove(obstacle);
+        }
+
+        public Obstacle GetBulletBoss()
+        {
+            if (cal.isBoss)
+            {
+                return obstaclesWhenBoss.ElementAt(obstaclesWhenBoss.Count - 1);
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public int GetDistanceX()
