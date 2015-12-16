@@ -69,7 +69,6 @@
             this.Name = "Interface";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Interface";
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Interface_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.startPicture)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.startBox)).EndInit();
             this.ResumeLayout(false);
