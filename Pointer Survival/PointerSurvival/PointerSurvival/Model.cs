@@ -51,5 +51,15 @@ namespace PointerSurvival
             oList.Add(m);
         }
 
+        public void NotifyReset()
+        {
+            foreach (View m in oList)
+            {
+                m.NotifyReset(this);
+            }
+        }
+
+
+
     }
 }

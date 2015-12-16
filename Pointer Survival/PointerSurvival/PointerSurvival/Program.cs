@@ -16,7 +16,7 @@ namespace PointerSurvival
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new PointerSurvivalView());
+            Application.Run(new Interface());
         }
     }
 }

@@ -64,7 +64,10 @@ namespace PointerSurvival
 
         }
 
-        
+        public void NotifyReset(Model m)
+        {
+            UpdateNewGame((PointerSurvivalModel)m);
+        }
 
         public void NotifyAsteroid(Model m)
         {
@@ -117,7 +120,21 @@ namespace PointerSurvival
                         o.Destroy();
                         this.Controls.Remove(o.obj);
                         PointerBox.Hide();
-                        Close();
+                        DialogResult dialogResult;
+                        timer1.Stop();
+                        obstacleTimer.Stop();
+                        itemTimer.Stop();
+                        dialogResult = MessageBox.Show("Want to retry ?", "Your Score is " + scorelbl.Text, MessageBoxButtons.OKCancel);
+                        if (dialogResult == DialogResult.OK)
+                        {
+                            controller.ActionPerformed(PointerSurvivalController.Reset);
+                        }
+                        else
+                        {
+                            Close();
+                        }
+                        break;
+
                     }
                     if (o.isOutOfBoundary())
                     {
@@ -240,6 +257,47 @@ namespace PointerSurvival
             }
         }
 
+        private void UpdateNewGame(PointerSurvivalModel m)
+        {
+            if (m.GetAsteroids().Count > 0)
+            {
+                foreach (Obstacle o in m.GetAsteroids())
+                {
+                    this.Controls.Remove(o.obj);
+                }
+            }
+            if (m.GetBullets().Count > 0)
+            {
+                foreach (Weapon b in m.GetBullets())
+                {
+                    this.Controls.Remove(b.obj);
+                }
+            }
+            if (m.GetItems().Count > 0)
+            {
+                foreach (Item o in m.GetItems())
+                {
+                    this.Controls.Remove(o.obj);
+                }
+            }
+            
+            PointerBox.Show();
+            timer1.Start();
+            obstacleTimer.Start();
+            itemTimer.Start();
+            num1lbl.Text = "0";
+            num2lbl.Text = "0";
+            operationlbl.Text = "?";
+            LevelTxt.Text = "1";
+            speedTxt.Text = "" +PointerSurvivalController.Speed;
+            asteroidSpawnTimeTxt.Text = "" + PointerSurvivalController.TimeToCreateAsteroid/1000;
+            scorelbl.Text = "0";
+            answerlbl.Text = "10";
+            m.UpdateNewGame();
+            PointerBox.Location = new Point(600, 350);
+            
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
             
@@ -255,22 +313,22 @@ namespace PointerSurvival
           
             if (e.KeyCode == Keys.W)
             {
-                pointerBox.Image = PointerSurvival.Properties.Resources.pointer;
+                pointerBox.Image = PointerSurvival.Properties.Resources.spaceup;
                 controller.ActionPerformed(PointerSurvivalController.Up);
             }
             else if (e.KeyCode == Keys.S)
             {
-                pointerBox.Image = PointerSurvival.Properties.Resources.pointerD;
+                pointerBox.Image = PointerSurvival.Properties.Resources.spacedown;
                 controller.ActionPerformed(PointerSurvivalController.Down);
             }
             else if (e.KeyCode == Keys.A)
             {
-                pointerBox.Image = PointerSurvival.Properties.Resources.pointerL;
+                pointerBox.Image = PointerSurvival.Properties.Resources.spaceleft;
                 controller.ActionPerformed(PointerSurvivalController.Left);
             }
             else if (e.KeyCode == Keys.D)
             {
-                pointerBox.Image = PointerSurvival.Properties.Resources.pointerR;
+                pointerBox.Image = PointerSurvival.Properties.Resources.spaceright;
                 controller.ActionPerformed(PointerSurvivalController.Right);
             }
 
@@ -370,13 +428,13 @@ namespace PointerSurvival
         private void timer_toast_Tick(object sender, EventArgs e)
         {
             int fadingSpeed = 5;
-            if(toastLabel.ForeColor.R < 251)
-                toastLabel.ForeColor = Color.FromArgb(toastLabel.ForeColor.R + fadingSpeed, toastLabel.ForeColor.G + fadingSpeed, toastLabel.ForeColor.B + fadingSpeed);
+            if(toastLabel.ForeColor.R > 4)
+                toastLabel.ForeColor = Color.FromArgb(toastLabel.ForeColor.R - fadingSpeed, toastLabel.ForeColor.G - fadingSpeed, toastLabel.ForeColor.B - fadingSpeed);
 
-            if (toastLabel.ForeColor.R >= 250)
+            if (toastLabel.ForeColor.R <= 5)
             {
                 timer_toast.Stop();
-                toastLabel.ForeColor = Color.FromArgb(0,0,0);
+                toastLabel.ForeColor = Color.FromArgb(255,255,255);
                 toastLabel.Hide();
                 toastLabel.ForeColor = this.BackColor;
             }
@@ -391,7 +449,7 @@ namespace PointerSurvival
 
         private void ToastShow(string Text)
         {
-            toastLabel.ForeColor = Color.FromArgb(0, 0, 0);
+            toastLabel.ForeColor = Color.FromArgb(255, 255, 255);
             toastLabel.Show();
             toastLabel.Text = Text;
             threesecondTimer.Start();
@@ -406,6 +464,11 @@ namespace PointerSurvival
         {
             Console.WriteLine("timer "+fireCount);
             fireCount++;
+        }
+
+        private void num2lbl_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

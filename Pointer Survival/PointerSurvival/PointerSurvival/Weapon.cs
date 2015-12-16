@@ -41,14 +41,14 @@ namespace PointerSurvival
         public void Shoot(int x, int y, int Direction)
         {
             PictureBox mainSprite = new PictureBox();
-            mainSprite.Size = new Size(10, 10);
-            mainSprite.Location = new Point(x+15, y+15);
+            mainSprite.Size = new Size(15, 15);
+            mainSprite.Location = new Point(x+10, y+10);
 
             if(Type == Right)
-                mainSprite.BackColor = Color.Red;
+                mainSprite.BackColor = Color.Transparent;
             else
             {
-                mainSprite.BackColor = Color.LightSkyBlue;
+                mainSprite.BackColor = Color.Transparent;
             }
             obj = mainSprite;
             goX = Form.MousePosition.X > x;
@@ -76,18 +76,22 @@ namespace PointerSurvival
             {
                 if (playerDirection == PointerSurvivalModel.DirectionUp)
                 {
+                    obj.Image = PointerSurvival.Properties.Resources.bulletU;
                     obj.Top -= PointerSurvivalController.BulletSpeed;
                 }
                 else if (playerDirection == PointerSurvivalModel.DirectionDown)
                 {
+                    obj.Image = PointerSurvival.Properties.Resources.bulletD;
                     obj.Top += PointerSurvivalController.BulletSpeed;
                 }
                 else if (playerDirection == PointerSurvivalModel.DirectionRight)
                 {
+                    obj.Image = PointerSurvival.Properties.Resources.bulletR;
                     obj.Left += PointerSurvivalController.BulletSpeed;
                 }
                 else if (playerDirection == PointerSurvivalModel.DirectionLeft)
                 {
+                    obj.Image = PointerSurvival.Properties.Resources.bulletL;
                     obj.Left -= PointerSurvivalController.BulletSpeed;
                 }
             }

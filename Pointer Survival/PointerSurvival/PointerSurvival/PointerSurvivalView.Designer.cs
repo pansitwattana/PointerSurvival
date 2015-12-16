@@ -49,18 +49,20 @@
             this.LevelTxt = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.fireTimer = new System.Windows.Forms.Timer(this.components);
+            this.label4 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.PointerBox)).BeginInit();
             this.SuspendLayout();
             // 
             // PointerBox
             // 
             this.PointerBox.BackColor = System.Drawing.Color.Transparent;
-            this.PointerBox.BackgroundImage = global::PointerSurvival.Properties.Resources.pointer;
-            this.PointerBox.Image = global::PointerSurvival.Properties.Resources.pointer;
-            this.PointerBox.Location = new System.Drawing.Point(575, 350);
+            this.PointerBox.Image = global::PointerSurvival.Properties.Resources.spaceup;
+            this.PointerBox.Location = new System.Drawing.Point(600, 350);
             this.PointerBox.Name = "PointerBox";
-            this.PointerBox.Size = new System.Drawing.Size(38, 46);
-            this.PointerBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.PointerBox.Size = new System.Drawing.Size(34, 36);
+            this.PointerBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.PointerBox.TabIndex = 0;
             this.PointerBox.TabStop = false;
             // 
@@ -78,41 +80,50 @@
             // num1lbl
             // 
             this.num1lbl.AutoSize = true;
-            this.num1lbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.num1lbl.Location = new System.Drawing.Point(524, 597);
+            this.num1lbl.BackColor = System.Drawing.Color.Transparent;
+            this.num1lbl.Font = new System.Drawing.Font("Arial Rounded MT Bold", 40F);
+            this.num1lbl.ForeColor = System.Drawing.Color.White;
+            this.num1lbl.Location = new System.Drawing.Point(496, 580);
             this.num1lbl.Name = "num1lbl";
-            this.num1lbl.Size = new System.Drawing.Size(43, 46);
+            this.num1lbl.Size = new System.Drawing.Size(59, 62);
             this.num1lbl.TabIndex = 1;
             this.num1lbl.Text = "0";
             // 
             // operationlbl
             // 
             this.operationlbl.AutoSize = true;
-            this.operationlbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.operationlbl.Location = new System.Drawing.Point(573, 597);
+            this.operationlbl.BackColor = System.Drawing.Color.Transparent;
+            this.operationlbl.Font = new System.Drawing.Font("Arial Rounded MT Bold", 39.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.operationlbl.ForeColor = System.Drawing.Color.White;
+            this.operationlbl.Location = new System.Drawing.Point(589, 581);
             this.operationlbl.Name = "operationlbl";
-            this.operationlbl.Size = new System.Drawing.Size(43, 46);
+            this.operationlbl.Size = new System.Drawing.Size(57, 61);
             this.operationlbl.TabIndex = 2;
             this.operationlbl.Text = "?";
             // 
             // num2lbl
             // 
             this.num2lbl.AutoSize = true;
-            this.num2lbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.num2lbl.Location = new System.Drawing.Point(622, 597);
+            this.num2lbl.BackColor = System.Drawing.Color.Transparent;
+            this.num2lbl.Font = new System.Drawing.Font("Arial Rounded MT Bold", 40F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.num2lbl.ForeColor = System.Drawing.Color.White;
+            this.num2lbl.Location = new System.Drawing.Point(679, 580);
             this.num2lbl.Name = "num2lbl";
-            this.num2lbl.Size = new System.Drawing.Size(43, 46);
+            this.num2lbl.Size = new System.Drawing.Size(59, 62);
             this.num2lbl.TabIndex = 3;
             this.num2lbl.Text = "0";
+            this.num2lbl.Click += new System.EventHandler(this.num2lbl_Click);
             // 
             // answerlbl
             // 
             this.answerlbl.AllowDrop = true;
             this.answerlbl.AutoSize = true;
-            this.answerlbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 40F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.answerlbl.BackColor = System.Drawing.Color.Transparent;
+            this.answerlbl.Font = new System.Drawing.Font("Arial Rounded MT Bold", 39.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.answerlbl.ForeColor = System.Drawing.Color.White;
             this.answerlbl.Location = new System.Drawing.Point(564, 9);
             this.answerlbl.Name = "answerlbl";
-            this.answerlbl.Size = new System.Drawing.Size(89, 63);
+            this.answerlbl.Size = new System.Drawing.Size(89, 61);
             this.answerlbl.TabIndex = 6;
             this.answerlbl.Text = "10";
             this.answerlbl.Click += new System.EventHandler(this.label5_Click);
@@ -120,10 +131,12 @@
             // scorelbl
             // 
             this.scorelbl.AutoSize = true;
-            this.scorelbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.scorelbl.Location = new System.Drawing.Point(1129, 9);
+            this.scorelbl.BackColor = System.Drawing.Color.Transparent;
+            this.scorelbl.Font = new System.Drawing.Font("Arial Rounded MT Bold", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.scorelbl.ForeColor = System.Drawing.Color.White;
+            this.scorelbl.Location = new System.Drawing.Point(1128, 9);
             this.scorelbl.Name = "scorelbl";
-            this.scorelbl.Size = new System.Drawing.Size(43, 46);
+            this.scorelbl.Size = new System.Drawing.Size(44, 46);
             this.scorelbl.TabIndex = 7;
             this.scorelbl.Text = "0";
             // 
@@ -141,9 +154,12 @@
             // toastLabel
             // 
             this.toastLabel.AutoSize = true;
-            this.toastLabel.Location = new System.Drawing.Point(560, 95);
+            this.toastLabel.BackColor = System.Drawing.Color.Transparent;
+            this.toastLabel.Font = new System.Drawing.Font("Monotype Corsiva", 15F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.toastLabel.ForeColor = System.Drawing.Color.White;
+            this.toastLabel.Location = new System.Drawing.Point(509, 123);
             this.toastLabel.Name = "toastLabel";
-            this.toastLabel.Size = new System.Drawing.Size(93, 13);
+            this.toastLabel.Size = new System.Drawing.Size(144, 24);
             this.toastLabel.TabIndex = 8;
             this.toastLabel.Text = "I\'m fading out now";
             this.toastLabel.Visible = false;
@@ -156,47 +172,60 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(1082, 35);
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.Font = new System.Drawing.Font("Arial Rounded MT Bold", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(1079, 28);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(44, 13);
+            this.label1.Size = new System.Drawing.Size(47, 12);
             this.label1.TabIndex = 9;
             this.label1.Text = "Score : ";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.Color.Transparent;
+            this.label2.Font = new System.Drawing.Font("Arial Rounded MT Bold", 8.25F);
+            this.label2.ForeColor = System.Drawing.Color.White;
             this.label2.Location = new System.Drawing.Point(1079, 56);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(47, 13);
+            this.label2.Size = new System.Drawing.Size(49, 12);
             this.label2.TabIndex = 10;
             this.label2.Text = "Speed : ";
             // 
             // speedTxt
             // 
             this.speedTxt.AutoSize = true;
-            this.speedTxt.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.speedTxt.BackColor = System.Drawing.Color.Transparent;
+            this.speedTxt.Font = new System.Drawing.Font("Arial Rounded MT Bold", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.speedTxt.ForeColor = System.Drawing.Color.White;
             this.speedTxt.Location = new System.Drawing.Point(1132, 47);
             this.speedTxt.Name = "speedTxt";
-            this.speedTxt.Size = new System.Drawing.Size(24, 25);
+            this.speedTxt.Size = new System.Drawing.Size(22, 23);
             this.speedTxt.TabIndex = 11;
             this.speedTxt.Text = "0";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(1016, 81);
+            this.label3.BackColor = System.Drawing.Color.Transparent;
+            this.label3.Font = new System.Drawing.Font("Arial Rounded MT Bold", 8.25F);
+            this.label3.ForeColor = System.Drawing.Color.White;
+            this.label3.Location = new System.Drawing.Point(1001, 81);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(110, 13);
+            this.label3.Size = new System.Drawing.Size(125, 12);
             this.label3.TabIndex = 12;
             this.label3.Text = "TimeAsteroidSpawn : ";
             // 
             // asteroidSpawnTimeTxt
             // 
             this.asteroidSpawnTimeTxt.AutoSize = true;
-            this.asteroidSpawnTimeTxt.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.asteroidSpawnTimeTxt.BackColor = System.Drawing.Color.Transparent;
+            this.asteroidSpawnTimeTxt.Font = new System.Drawing.Font("Arial Rounded MT Bold", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.asteroidSpawnTimeTxt.ForeColor = System.Drawing.Color.White;
             this.asteroidSpawnTimeTxt.Location = new System.Drawing.Point(1132, 72);
             this.asteroidSpawnTimeTxt.Name = "asteroidSpawnTimeTxt";
-            this.asteroidSpawnTimeTxt.Size = new System.Drawing.Size(24, 25);
+            this.asteroidSpawnTimeTxt.Size = new System.Drawing.Size(22, 23);
             this.asteroidSpawnTimeTxt.TabIndex = 13;
             this.asteroidSpawnTimeTxt.Text = "0";
             this.asteroidSpawnTimeTxt.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -204,19 +233,24 @@
             // LevelTxt
             // 
             this.LevelTxt.AutoSize = true;
-            this.LevelTxt.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.LevelTxt.Location = new System.Drawing.Point(51, 0);
+            this.LevelTxt.BackColor = System.Drawing.Color.Transparent;
+            this.LevelTxt.Font = new System.Drawing.Font("Monotype Corsiva", 15F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LevelTxt.ForeColor = System.Drawing.Color.White;
+            this.LevelTxt.Location = new System.Drawing.Point(53, 3);
             this.LevelTxt.Name = "LevelTxt";
-            this.LevelTxt.Size = new System.Drawing.Size(24, 25);
+            this.LevelTxt.Size = new System.Drawing.Size(20, 24);
             this.LevelTxt.TabIndex = 14;
             this.LevelTxt.Text = "0";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
+            this.label5.BackColor = System.Drawing.Color.Transparent;
+            this.label5.Font = new System.Drawing.Font("Monotype Corsiva", 10F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.ForeColor = System.Drawing.Color.White;
             this.label5.Location = new System.Drawing.Point(12, 9);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(33, 13);
+            this.label5.Size = new System.Drawing.Size(35, 16);
             this.label5.TabIndex = 15;
             this.label5.Text = "Level";
             this.label5.Click += new System.EventHandler(this.label5_Click_1);
@@ -227,12 +261,51 @@
             this.fireTimer.Interval = 10;
             this.fireTimer.Tick += new System.EventHandler(this.fireTimer_Tick);
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.BackColor = System.Drawing.Color.Transparent;
+            this.label4.Font = new System.Drawing.Font("Modern No. 20", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.label4.Location = new System.Drawing.Point(499, 638);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(56, 14);
+            this.label4.TabIndex = 16;
+            this.label4.Text = "Left Arrow";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.BackColor = System.Drawing.Color.Transparent;
+            this.label6.Font = new System.Drawing.Font("Modern No. 20", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.label6.Location = new System.Drawing.Point(674, 638);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(64, 14);
+            this.label6.TabIndex = 17;
+            this.label6.Text = "Right Arrow";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.BackColor = System.Drawing.Color.Transparent;
+            this.label7.Font = new System.Drawing.Font("Modern No. 20", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.label7.Location = new System.Drawing.Point(587, 638);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(59, 14);
+            this.label7.TabIndex = 18;
+            this.label7.Text = "Left / Right";
+            // 
             // PointerSurvivalView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.Window;
+            this.BackColor = System.Drawing.SystemColors.MenuText;
             this.ClientSize = new System.Drawing.Size(1184, 661);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.LevelTxt);
             this.Controls.Add(this.asteroidSpawnTimeTxt);
@@ -290,6 +363,9 @@
         private System.Windows.Forms.Label LevelTxt;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Timer fireTimer;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
     }
 }
 

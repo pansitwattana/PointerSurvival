@@ -132,6 +132,11 @@ namespace PointerSurvival
             cal.isBoss = true;
         }
 
+        public void Reset()
+        {
+            NotifyReset();
+        }
+
         public void Fire1()
         {
             player.Fire(playerDirection);
@@ -237,6 +242,37 @@ namespace PointerSurvival
         public bool isHit(Item item)
         {
             return false;
+        }
+
+        public void UpdateNewGame()
+        {
+            if (obstacles.Count > 0)
+            {
+                foreach (Obstacle o in obstacles)
+                {
+                    o.Destroy();
+                }
+            }
+            if (bullets.Count > 0)
+            {
+                foreach (Weapon b in bullets)
+                {
+                    b.Destroy();
+                }
+            }
+            if (items.Count > 0)
+            {
+                foreach (Item o in items)
+                {
+                    o.obj.Dispose();
+                }
+            }
+            player = new Player();
+            playerDirection = DirectionUp;
+            obstacles = new List<Obstacle>();
+            items = new List<Item>();
+            bullets = new List<Weapon>();
+            cal = new Calculation();
         }
     }
 }

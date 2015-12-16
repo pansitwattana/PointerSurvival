@@ -48,6 +48,12 @@
   <ItemGroup>
     <Compile Include="Calculation.cs" />
     <Compile Include="Controller.cs" />
+    <Compile Include="Interface.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Interface.Designer.cs">
+      <DependentUpon>Interface.cs</DependentUpon>
+    </Compile>
     <Compile Include="Item.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="PointerSurvivalController.cs" />
@@ -69,6 +75,9 @@
     </Compile>
     <Compile Include="View.cs" />
     <Compile Include="Weapon.cs" />
+    <EmbeddedResource Include="Interface.resx">
+      <DependentUpon>Interface.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PointerSurvivalView.resx">
       <DependentUpon>PointerSurvivalView.cs</DependentUpon>
     </EmbeddedResource>
@@ -119,6 +128,42 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\pointerR.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bulletD.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bulletL.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bulletR.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bulletU.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\item.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1200.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\game.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\start.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\spacedown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\spaceleft.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\spaceright.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\spaceup.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

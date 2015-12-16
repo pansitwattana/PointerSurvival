@@ -55,20 +55,9 @@ namespace PointerSurvival
             {
                 obj = new PictureBox();
             }
-            Bitmap bmp = new Bitmap(PointerSurvival.Properties.Resources.obstacle);
             Point location = new Point(Calculation.random.Next(1200), Calculation.random.Next(700));
-            Graphics g = Graphics.FromImage(bmp);
 
-
-            g.SmoothingMode = SmoothingMode.AntiAlias;
-            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-            g.PixelOffsetMode = PixelOffsetMode.HighQuality;
-
-            g.DrawString("Itm", new Font("Tahoma", 20), Brushes.Black, new Point(20, 20));
-
-            g.Flush();
-
-            obj.Image = bmp;
+            obj.Image = (PointerSurvival.Properties.Resources.item);
             obj.Location = location;
             obj.Size = new Size(ItemSize, ItemSize);
             obj.SizeMode = PictureBoxSizeMode.StretchImage;

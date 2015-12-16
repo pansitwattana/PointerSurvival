@@ -27,6 +27,7 @@ namespace PointerSurvival
         public const int DownRight = 10;
         public const int ItemSpawn = 11;
         public const int StageBoss = 12;
+        public const int Reset = 13;
 
         public const int Fire2 = 14;
 
@@ -77,6 +78,9 @@ namespace PointerSurvival
                         break;
                     case StageBoss:
                         m.BecomeBoss();
+                        break;
+                    case Reset:
+                        m.Reset();
                         break;
                 }
             }
