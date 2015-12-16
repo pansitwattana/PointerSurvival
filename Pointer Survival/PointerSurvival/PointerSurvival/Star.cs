@@ -19,8 +19,8 @@ namespace PointerSurvival
             x = r.Next(gameWidth);
             y = r.Next(gameHeigth);
 
-            vx = 1;
-            vy = 1;
+            vx = r.Next(2) + 2;
+            vy = r.Next(2) + 2;
 
             radius = r.Next(2) + 1;
 
@@ -41,22 +41,21 @@ namespace PointerSurvival
             return b;
         }
         */
-        public void move(int gameWidth, int gameHeigth)
+        public void move( int gameWidth, int gameHeigth)
         {
+
             if (x - radius < 0 || x + radius > gameWidth)
             {
-                x = Calculation.random.Next(gameWidth);
-                y = Calculation.random.Next(gameHeigth);
+                vx *= (-1); 
             }
 
             if (y - radius < 0 || y + radius > gameHeigth)
             {
-                x = Calculation.random.Next(gameWidth);
-                y = Calculation.random.Next(gameHeigth);
+                vy *= (-1);
             }
 
-            this.x += vx;
-            this.y += vx;
+            x += vx;
+            y += vy;
         }
 
         public void Draw(Graphics g)

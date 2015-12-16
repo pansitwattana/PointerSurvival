@@ -15,14 +15,7 @@ namespace PointerSurvival
         public static int PercentBornChanable = 10;
         public static int PercentBornDurable = 5;
 
-        public const int BossType = -3;
-        public const int Base2Type = -2;
-        public const int NormalType = -1;
-        public const int BossBullet = -4;
-
         public static int TimeForExcitation = 50;
-
-        public int Type { get; set; }
 
         public const int OperatorType = -1;
 
@@ -71,22 +64,19 @@ namespace PointerSurvival
 
         private int counter = 0;
 
-        public Obstacle(int playerX, int playerY, int Type)
+        public Obstacle(int playerX, int playerY, bool isBoss)
         {
-            CreateObstacle(playerX, playerY, Type);
+            CreateObstacle(playerX, playerY, isBoss);
         }
 
-        private void CreateObstacle(int playerX, int playerY, int Type)
+        private void CreateObstacle(int playerX, int playerY, bool isBoss)
         {
             CreateImageWith(GenerateNumberOrOperator(), RandomLocationWithSafeDistanceFrom(playerX, playerY), Calculation.random.Next(1, 4));
-            this.Type = Type;
             RandomType();
             RandomDirection();
-            if (Type == Base2Type) BaseNumber = 2;
-            else if (Type == NormalType) baseNumber = 10;
-            else if (Type == BossBullet) BaseNumber = 2;
+            if (isBoss) BaseNumber = 2;
             else baseNumber = 10;
-            Update(Type);
+            Update();
         }
 
         private void CreateImageWith(string symbol, Point point, int speed)
@@ -120,7 +110,7 @@ namespace PointerSurvival
                 symbolLocation = new Point(20, 20);
             }
 
-            g.DrawString(symbol, new Font("Arial Rounded MT", symbolsize), brush, symbolLocation);
+            g.DrawString(symbol, new Font("Consolas", symbolsize), brush, symbolLocation);
 
             g.Flush();
 
@@ -312,7 +302,7 @@ namespace PointerSurvival
             CreateImageWith(GenerateNumberOrOperator(n), obj.Location, Speed);
         }
 
-        public void RunAbility(int Type)
+        public void RunAbility()
         {
             if (isChangable)
             {
@@ -327,30 +317,12 @@ namespace PointerSurvival
                     }
                 }
             }
-            else if(Type == BossType)
-            {
-                isChangable = false;
-                isDurable = false;
-                speed = 0;
-                obj.Top = 600;
-                obj.Left = 350;
-                CreateImageWith(">.<", obj.Location, 0);
-            }
-            else if(Type == BossBullet)
-            {
-                isChangable = false;
-                isDurable = false;
-                string number = Calculation.ConvertBase(int.Parse(GenerateNumber()), new char[] { '0', '1' });
-                obj.Top = 600;
-                obj.Left = 350;
-                CreateImageWith(number, obj.Location, 2);
-            }
             counter++;
         }
 
-        public bool Update(int Type)
+        public bool Update()
         {
-            RunAbility(Type);
+            RunAbility();
             Move();
 
             return isHit();

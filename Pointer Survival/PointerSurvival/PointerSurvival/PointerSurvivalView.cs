@@ -27,8 +27,6 @@ namespace PointerSurvival
         public PointerSurvivalView()
         {
             InitializeComponent();
-            pointerBox = PointerBox;
-
 
             model = new PointerSurvivalModel();
             model.AttachObserver(this);
@@ -36,7 +34,8 @@ namespace PointerSurvival
             controller.AddModel(model);
             PointerBox.Location = Player.PositionStart;
             //Cursor.Hide();
-           
+            pointerBox = PointerBox;
+
             LevelTxt.Text = "1";
             asteroidSpawnTimeTxt.Text = "" + PointerSurvivalController.TimeToCreateAsteroid/1000;
             speedTxt.Text = "" + PointerSurvivalController.Speed;
@@ -54,7 +53,7 @@ namespace PointerSurvival
             fireCount = 0;
             fireTime = 0;
 
-            for(int i = 1; i < 10; i++)
+            for(int i = 1; i < 40; i++)
             {
                 stars.Add(new Star(1200, 700, Calculation.random));
             }
@@ -67,7 +66,7 @@ namespace PointerSurvival
             UpdateAsteroids(((PointerSurvivalModel)m).GetAsteroids());
             UpdateBullets(((PointerSurvivalModel)m).GetBullets(), ((PointerSurvivalModel)m).GetAsteroids(), (PointerSurvivalModel)m);
             UpdateItems(((PointerSurvivalModel)m).GetItems(), ((PointerSurvivalModel)m).GetAsteroids(), ((PointerSurvivalModel)m).GetCalcucaltion());
-            
+
         }
 
         public void NotifyReset(Model m)
@@ -78,7 +77,6 @@ namespace PointerSurvival
         public void NotifyAsteroid(Model m)
         {
             UpdateNewAsteroid(((PointerSurvivalModel)m).GetLastAsteroids());
-            UpdateBossBullet(((PointerSurvivalModel)m).GetBulletBoss());
         }
 
         public void NotifyBullet(Model m)
@@ -103,11 +101,13 @@ namespace PointerSurvival
 
         private void UpdateNewAsteroid(Obstacle p)
         {
+            
             this.Controls.Add(p.obj);
         }
 
         private void UpdatePointerX(int distanceX)
         {
+
             PointerBox.Left = distanceX;
         }
 
@@ -116,25 +116,16 @@ namespace PointerSurvival
             PointerBox.Top = distanceY;
         }
 
-        private void UpdateBossBullet(Obstacle p)
-        {
-            if(p != null)
-            {
-                this.Controls.Add(p.obj);
-            }
-        }
-
         private void UpdateAsteroids(List<Obstacle> obstacles)
         {
-            this.Refresh();
-            foreach (Star s in stars)
+            foreach(Star s in stars)
             {
                 s.move(1200,700);
             }
             if (obstacles.Count > 0)
                 foreach (Obstacle o in obstacles)
                 {
-                    if (o.Update(Obstacle.NormalType))
+                    if (o.Update())
                     {
                         o.Destroy();
                         this.Controls.Remove(o.obj);
@@ -179,7 +170,6 @@ namespace PointerSurvival
                     //    }
                     //}
                 }
-            
         }
 
         private void UpdateItems(List<Item> items, List<Obstacle> obstacles, Calculation cal)
@@ -392,7 +382,7 @@ namespace PointerSurvival
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            
+            this.Refresh();
             controller.ActionPerformed(PointerSurvivalController.TimeTick);
         }
 
