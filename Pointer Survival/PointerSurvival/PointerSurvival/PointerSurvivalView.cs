@@ -63,7 +63,7 @@ namespace PointerSurvival
             UpdatePointerY(((PointerSurvivalModel)m).GetDistanceY());
             UpdateAsteroids(((PointerSurvivalModel)m).GetAsteroids(), ((PointerSurvivalModel)m).GetPlayer());
             UpdateBullets(((PointerSurvivalModel)m).GetBullets(), ((PointerSurvivalModel)m).GetAsteroids(), (PointerSurvivalModel)m);
-            UpdateItems(((PointerSurvivalModel)m).GetItems(), ((PointerSurvivalModel)m).GetAsteroids(), ((PointerSurvivalModel)m).GetCalcucaltion());
+            UpdateItems(((PointerSurvivalModel)m).GetItems(), ((PointerSurvivalModel)m).GetAsteroids(), ((PointerSurvivalModel)m).GetCalcucaltion(), ((PointerSurvivalModel)m).GetPlayer());
         }
 
         public void NotifyReset(Model m)
@@ -115,6 +115,30 @@ namespace PointerSurvival
 
         private void UpdateAsteroids(List<Obstacle> obstacles, Player player)
         {
+            if(player.Hp == 1)
+            {
+                lifePicture1.Show();
+                lifePicture2.Hide();
+                lifePicture3.Hide();
+            }
+            else if (player.Hp == 2)
+            {
+                lifePicture1.Show();
+                lifePicture2.Show();
+                lifePicture3.Hide();
+            }
+            else if(player.Hp == 3)
+            {
+                lifePicture1.Show();
+                lifePicture2.Show();
+                lifePicture3.Show();
+            }
+            else
+            {
+                lifePicture1.Hide();
+                lifePicture2.Hide();
+                lifePicture2.Hide();
+            }
             foreach(Star s in stars)
             {
                 s.move(1200,700);
@@ -124,6 +148,7 @@ namespace PointerSurvival
                 {
                     if (o.Update())
                     {
+                        ToastShow("Crashed !");
                         if (player.isDie())
                         {
                             PointerBox.Hide();
@@ -175,14 +200,14 @@ namespace PointerSurvival
                 }
         }
 
-        private void UpdateItems(List<Item> items, List<Obstacle> obstacles, Calculation cal)
+        private void UpdateItems(List<Item> items, List<Obstacle> obstacles, Calculation cal, Player player)
         {
             if (items.Count > 0)
                 foreach (Item item in items)
                 {
                     if (item.Update(pointerBox))
                     {   
-                        item.RunAbility(obstacles, cal, int.Parse(answerlbl.Text));
+                        item.RunAbility(obstacles, cal, int.Parse(answerlbl.Text),player);
                         ToastShow(item.Text);
                         item.obj.Dispose();
                         this.Controls.Remove(item.obj);
@@ -314,7 +339,9 @@ namespace PointerSurvival
             answerlbl.Text = "10";
             m.UpdateNewGame();
             PointerBox.Location = new Point(600, 350);
-            
+            lifePicture1.Show();
+            lifePicture2.Show();
+            lifePicture3.Hide();
         }
 
         private void Form1_Load(object sender, EventArgs e)

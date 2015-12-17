@@ -17,6 +17,7 @@ namespace PointerSurvival
         public const int AnswerAsteroidItem = 3;
         public const int BulletSpeedItem = 4;
         public const int FireRateItem = 5;
+        public const int AddLifeItem = 6;
 
         public static int ItemSize = 30;
 
@@ -36,7 +37,7 @@ namespace PointerSurvival
 
         public void RandomType()
         {
-            ItemType = Calculation.random.Next(6);
+            ItemType = Calculation.random.Next(7);
             switch (ItemType)
             {
                 case SpeedRandomItem:
@@ -57,6 +58,10 @@ namespace PointerSurvival
                 case FireRateItem:
                     Name = "FireRate";
                     break;
+                case AddLifeItem:
+                    Name = "Life";
+                    break;
+
             }
         }
 
@@ -111,6 +116,12 @@ namespace PointerSurvival
                     Text = "Speed changed to the Fastest";
                     break;
             }
+        }
+
+        public void RunAddLifeItem(Player player)
+        {
+            Text = "Get 1 Life !";
+            player.Hp++;
         }
 
         public void RunChangeBaseNumberItem(List<Obstacle> obstacles)
@@ -192,7 +203,7 @@ namespace PointerSurvival
             Text = "Fire Rate Increased !";
         }
 
-        public void RunAbility(List<Obstacle> obstacles, Calculation cal, int answer)
+        public void RunAbility(List<Obstacle> obstacles, Calculation cal, int answer, Player player)
         {
             switch (ItemType)
             {
@@ -213,6 +224,9 @@ namespace PointerSurvival
                     break;
                 case FireRateItem:
                     RunFireRateItem();
+                    break;
+                case AddLifeItem:
+                    RunAddLifeItem(player);
                     break;
             }
             obj.Dispose();
