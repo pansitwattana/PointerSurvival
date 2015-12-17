@@ -37,9 +37,7 @@ namespace PointerSurvival
             
 
             LevelTxt.Text = "1";
-            asteroidSpawnTimeTxt.Text = "" + PointerSurvivalController.TimeToCreateAsteroid/1000;
-            speedTxt.Text = "" + PointerSurvivalController.Speed;
-
+            
             obstacleTimer.Interval = PointerSurvivalController.TimeToCreateAsteroid;
             obstacleTimer.Enabled = true;
 
@@ -63,7 +61,7 @@ namespace PointerSurvival
         {
             UpdatePointerX(((PointerSurvivalModel)m).GetDistanceX());
             UpdatePointerY(((PointerSurvivalModel)m).GetDistanceY());
-            UpdateAsteroids(((PointerSurvivalModel)m).GetAsteroids());
+            UpdateAsteroids(((PointerSurvivalModel)m).GetAsteroids(), ((PointerSurvivalModel)m).GetPlayer());
             UpdateBullets(((PointerSurvivalModel)m).GetBullets(), ((PointerSurvivalModel)m).GetAsteroids(), (PointerSurvivalModel)m);
             UpdateItems(((PointerSurvivalModel)m).GetItems(), ((PointerSurvivalModel)m).GetAsteroids(), ((PointerSurvivalModel)m).GetCalcucaltion());
         }
@@ -115,7 +113,7 @@ namespace PointerSurvival
             PointerBox.Top = distanceY;
         }
 
-        private void UpdateAsteroids(List<Obstacle> obstacles)
+        private void UpdateAsteroids(List<Obstacle> obstacles, Player player)
         {
             foreach(Star s in stars)
             {
@@ -126,22 +124,28 @@ namespace PointerSurvival
                 {
                     if (o.Update())
                     {
-                        o.Destroy();
+                        if (player.isDie())
+                        {
+                            PointerBox.Hide();
+                            DialogResult dialogResult;
+                            timer1.Stop();
+                            obstacleTimer.Stop();
+                            itemTimer.Stop();
+                            dialogResult = MessageBox.Show("Want to retry ?", "Your Score is " + scorelbl.Text, MessageBoxButtons.OKCancel);
+                            if (dialogResult == DialogResult.OK)
+                            {
+                                controller.ActionPerformed(PointerSurvivalController.Reset);
+                            }
+                            else
+                            {
+                                Close();
+                            }
+                        }
+                        o.obj.Dispose();
+                        o.isDurable = false;
+                        o.isActive = false;
                         this.Controls.Remove(o.obj);
-                        PointerBox.Hide();
-                        DialogResult dialogResult;
-                        timer1.Stop();
-                        obstacleTimer.Stop();
-                        itemTimer.Stop();
-                        dialogResult = MessageBox.Show("Want to retry ?", "Your Score is " + scorelbl.Text, MessageBoxButtons.OKCancel);
-                        if (dialogResult == DialogResult.OK)
-                        {
-                            controller.ActionPerformed(PointerSurvivalController.Reset);
-                        }
-                        else
-                        {
-                            Close();
-                        }
+                        
                         break;
 
                     }
@@ -179,7 +183,6 @@ namespace PointerSurvival
                     if (item.Update(pointerBox))
                     {   
                         item.RunAbility(obstacles, cal, int.Parse(answerlbl.Text));
-                        speedTxt.Text = "" + PointerSurvivalController.Speed;
                         ToastShow(item.Text);
                         item.obj.Dispose();
                         this.Controls.Remove(item.obj);
@@ -231,7 +234,6 @@ namespace PointerSurvival
                                         obstacleTimer.Interval -= 100;
                                         PointerSurvivalController.TimeToCreateAsteroid = obstacleTimer.Interval;
                                         LevelTxt.Text = "" + (m.cal.Level + 1);
-                                        asteroidSpawnTimeTxt.Text = "" + (PointerSurvivalController.TimeToCreateAsteroid/1000.00);
                                     }
                                         
                                 }
@@ -308,8 +310,6 @@ namespace PointerSurvival
             num2lbl.Text = "0";
             operationlbl.Text = "?";
             LevelTxt.Text = "1";
-            speedTxt.Text = "" +PointerSurvivalController.Speed;
-            asteroidSpawnTimeTxt.Text = "" + PointerSurvivalController.TimeToCreateAsteroid/1000;
             scorelbl.Text = "0";
             answerlbl.Text = "10";
             m.UpdateNewGame();
@@ -490,7 +490,6 @@ namespace PointerSurvival
 
         private void fireTimer_Tick(object sender, EventArgs e)
         {
-            Console.WriteLine("timer "+fireCount);
             fireCount++;
         }
 

@@ -12,9 +12,24 @@ namespace PointerSurvival
     class Player
     {
 
-        public static Point PositionStart = new Point(575, 350);
+
+
+        public static Point PositionStart = new Point(600, 350);
         private Point position;
         public Weapon weapon { get; set; }
+
+        private int hp;
+
+        public int Hp
+        {
+            get { return hp; }
+            set
+            {
+                if(value <= 3)
+                    hp = value;
+            }
+        }
+
 
         public Point Position
         {
@@ -25,6 +40,7 @@ namespace PointerSurvival
 
         public Player()
         {
+            Hp = 2;
             Position = PositionStart;
         }
 
@@ -43,6 +59,17 @@ namespace PointerSurvival
         public bool isHit(Item item)
         {
 
+            return false;
+        }
+
+        public bool isDie()
+        {
+            Console.WriteLine(Hp);
+            Hp--;
+            if(Hp <= 0)
+            {
+                return true;
+            }
             return false;
         }
     }

@@ -42,10 +42,6 @@
             this.toastLabel = new System.Windows.Forms.Label();
             this.threesecondTimer = new System.Windows.Forms.Timer(this.components);
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.speedTxt = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.asteroidSpawnTimeTxt = new System.Windows.Forms.Label();
             this.LevelTxt = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.fireTimer = new System.Windows.Forms.Timer(this.components);
@@ -53,7 +49,13 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.clearItemTimer = new System.Windows.Forms.Timer(this.components);
+            this.lifePicture1 = new System.Windows.Forms.PictureBox();
+            this.lifePicture2 = new System.Windows.Forms.PictureBox();
+            this.lifePicture3 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.PointerBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lifePicture1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lifePicture2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lifePicture3)).BeginInit();
             this.SuspendLayout();
             // 
             // PointerBox
@@ -182,55 +184,6 @@
             this.label1.TabIndex = 9;
             this.label1.Text = "Score : ";
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.BackColor = System.Drawing.Color.Transparent;
-            this.label2.Font = new System.Drawing.Font("Arial Rounded MT Bold", 8.25F);
-            this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(1079, 56);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(49, 12);
-            this.label2.TabIndex = 10;
-            this.label2.Text = "Speed : ";
-            // 
-            // speedTxt
-            // 
-            this.speedTxt.AutoSize = true;
-            this.speedTxt.BackColor = System.Drawing.Color.Transparent;
-            this.speedTxt.Font = new System.Drawing.Font("Arial Rounded MT Bold", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.speedTxt.ForeColor = System.Drawing.Color.White;
-            this.speedTxt.Location = new System.Drawing.Point(1132, 47);
-            this.speedTxt.Name = "speedTxt";
-            this.speedTxt.Size = new System.Drawing.Size(22, 23);
-            this.speedTxt.TabIndex = 11;
-            this.speedTxt.Text = "0";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.BackColor = System.Drawing.Color.Transparent;
-            this.label3.Font = new System.Drawing.Font("Arial Rounded MT Bold", 8.25F);
-            this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(1001, 81);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(125, 12);
-            this.label3.TabIndex = 12;
-            this.label3.Text = "TimeAsteroidSpawn : ";
-            // 
-            // asteroidSpawnTimeTxt
-            // 
-            this.asteroidSpawnTimeTxt.AutoSize = true;
-            this.asteroidSpawnTimeTxt.BackColor = System.Drawing.Color.Transparent;
-            this.asteroidSpawnTimeTxt.Font = new System.Drawing.Font("Arial Rounded MT Bold", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.asteroidSpawnTimeTxt.ForeColor = System.Drawing.Color.White;
-            this.asteroidSpawnTimeTxt.Location = new System.Drawing.Point(1132, 72);
-            this.asteroidSpawnTimeTxt.Name = "asteroidSpawnTimeTxt";
-            this.asteroidSpawnTimeTxt.Size = new System.Drawing.Size(22, 23);
-            this.asteroidSpawnTimeTxt.TabIndex = 13;
-            this.asteroidSpawnTimeTxt.Text = "0";
-            this.asteroidSpawnTimeTxt.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
             // LevelTxt
             // 
             this.LevelTxt.AutoSize = true;
@@ -303,21 +256,51 @@
             this.clearItemTimer.Interval = 60000;
             this.clearItemTimer.Tick += new System.EventHandler(this.clearItemTimer_Tick);
             // 
+            // lifePicture1
+            // 
+            this.lifePicture1.Image = global::PointerSurvival.Properties.Resources.spaceup;
+            this.lifePicture1.Location = new System.Drawing.Point(95, 9);
+            this.lifePicture1.Name = "lifePicture1";
+            this.lifePicture1.Size = new System.Drawing.Size(30, 31);
+            this.lifePicture1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.lifePicture1.TabIndex = 19;
+            this.lifePicture1.TabStop = false;
+            // 
+            // lifePicture2
+            // 
+            this.lifePicture2.Image = global::PointerSurvival.Properties.Resources.spaceup;
+            this.lifePicture2.Location = new System.Drawing.Point(130, 9);
+            this.lifePicture2.Name = "lifePicture2";
+            this.lifePicture2.Size = new System.Drawing.Size(30, 31);
+            this.lifePicture2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.lifePicture2.TabIndex = 20;
+            this.lifePicture2.TabStop = false;
+            // 
+            // lifePicture3
+            // 
+            this.lifePicture3.Image = global::PointerSurvival.Properties.Resources.spaceup;
+            this.lifePicture3.Location = new System.Drawing.Point(166, 9);
+            this.lifePicture3.Name = "lifePicture3";
+            this.lifePicture3.Size = new System.Drawing.Size(30, 31);
+            this.lifePicture3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.lifePicture3.TabIndex = 21;
+            this.lifePicture3.TabStop = false;
+            this.lifePicture3.Visible = false;
+            // 
             // PointerSurvivalView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.MenuText;
             this.ClientSize = new System.Drawing.Size(1184, 661);
+            this.Controls.Add(this.lifePicture3);
+            this.Controls.Add(this.lifePicture2);
+            this.Controls.Add(this.lifePicture1);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.LevelTxt);
-            this.Controls.Add(this.asteroidSpawnTimeTxt);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.speedTxt);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.toastLabel);
             this.Controls.Add(this.scorelbl);
@@ -342,6 +325,9 @@
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseMove);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PointerSurvivalView_MouseUp);
             ((System.ComponentModel.ISupportInitialize)(this.PointerBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lifePicture1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lifePicture2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lifePicture3)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -362,10 +348,6 @@
         private System.Windows.Forms.Label toastLabel;
         private System.Windows.Forms.Timer threesecondTimer;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label speedTxt;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label asteroidSpawnTimeTxt;
         private System.Windows.Forms.Label LevelTxt;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Timer fireTimer;
@@ -373,6 +355,9 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Timer clearItemTimer;
+        private System.Windows.Forms.PictureBox lifePicture1;
+        private System.Windows.Forms.PictureBox lifePicture2;
+        private System.Windows.Forms.PictureBox lifePicture3;
     }
 }
 

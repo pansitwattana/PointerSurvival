@@ -391,16 +391,10 @@ namespace PointerSurvival
         {
             //if (isHit(o))
             //{
-            //    if(goX != o.goX)
-            //    {
-            //        this.goX = !goX;
-            //        o.goX = !o.goX;
-            //    }
-            //    if(goY != o.goY)
-            //    {
-            //        this.goY = !goY;
-            //        o.goY = !o.goY;
-            //    }
+            //    speedX = o.speedX;
+            //    speedY = o.speedY;
+            //    obj.Left += speed * speedX;
+            //    obj.Top += speed * speedY
             //}
         }
 
@@ -448,20 +442,6 @@ namespace PointerSurvival
                 return true;
             }
 
-
-            return false;
-        }
-        public bool isHit(Obstacle w)
-        {
-            if (isActive)
-            {
-                if (w.obj.Left <= obj.Right && obj.Left <= w.obj.Right &&
-                                            w.obj.Top <= obj.Bottom && obj.Top <= w.obj.Bottom)
-                {
-                    isActive = false;
-                    return true;
-                }
-            }
 
             return false;
         }

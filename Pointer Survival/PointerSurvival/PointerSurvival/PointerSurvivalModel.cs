@@ -83,6 +83,11 @@ namespace PointerSurvival
             return false;
         }
 
+        public Player GetPlayer()
+        {
+            return player;
+        }
+
         public Calculation GetCalcucaltion()
         {
             return cal;
