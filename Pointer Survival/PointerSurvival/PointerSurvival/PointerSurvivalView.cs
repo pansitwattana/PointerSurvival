@@ -22,6 +22,8 @@ namespace PointerSurvival
         private bool m_right = false;
         private bool m_left = false;
 
+        private bool isPause = false;
+
         List<Star> stars = new List<Star>();
 
         public PointerSurvivalView()
@@ -376,6 +378,29 @@ namespace PointerSurvival
             {
                 pointerBox.Image = PointerSurvival.Properties.Resources.spaceright;
                 controller.ActionPerformed(PointerSurvivalController.Right);
+            }
+
+            if(e.KeyCode == Keys.Escape)
+            {
+                isPause = !isPause;
+                if (isPause)
+                {
+                    ToastShow("Game Pause...");
+                    timer1.Stop();
+                    obstacleTimer.Stop();
+                    itemTimer.Stop();
+                    fireTimer.Stop();
+                    clearItemTimer.Stop();
+                }
+                else
+                {
+                    ToastShow("Game Start...");
+                    timer1.Start();
+                    obstacleTimer.Start();
+                    itemTimer.Start();
+                    fireTimer.Start();
+                    clearItemTimer.Start();
+                }
             }
 
             if (fireCount >= fireTime)

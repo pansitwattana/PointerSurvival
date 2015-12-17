@@ -31,6 +31,7 @@ namespace PointerSurvival
         public const int Fire2 = 14;
         public const int ClearItem = 15;
 
+
         public override void ActionPerformed(int action)
         {
             foreach (PointerSurvivalModel m in mList)
